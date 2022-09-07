@@ -30,7 +30,7 @@ class RippleServiceProvider extends ServiceProvider
                         'label' => 'Danh sách mới cập nhật',
                         'type' => 'code',
                         'hint' => 'display_label|relation|find_by_field|value|limit|show_more_url',
-                        'value' => 'Phim bộ mới||type|series|8|/danh-sach/phim-bo',
+                        'value' => 'Phim bộ mới||type|series|10|/danh-sach/phim-bo',
                         'attributes' => [
                             'rows' => 5
                         ],
@@ -58,7 +58,7 @@ class RippleServiceProvider extends ServiceProvider
                         'name' => 'body_attributes',
                         'label' => 'Body attributes',
                         'type' => 'text',
-                        'value' => "class='bg-slate-800 font-sans leading-normal tracking-normal'",
+                        'value' => "class='bg-[#1a1a1a] font-sans leading-normal tracking-normal'",
                         'tab' => 'Custom CSS'
                     ],
                     [

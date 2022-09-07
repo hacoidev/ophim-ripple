@@ -49,24 +49,23 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
     @if (count($recommendations))
         <div class="owl-carousel recommend-carousel owl-theme">
             @foreach ($recommendations as $movie)
-                @include('themes::ripple.inc.movie_card')
+                @include('themes::ripple.inc.movie_card_recommend')
             @endforeach
         </div>
-        <div class="mb-5"></div>
     @endif
 
     @foreach ($data as $item)
         <div class="mb-5 ">
             <div class="section-heading flex bg-[#1511116d] rounded-lg p-0 mb-3 justify-between content-between">
-                <h2 class="inline p-2 bg-[red] rounded-l-lg">
-                    <span class="h-text font-bold text-white uppercase">{{ $item['label'] }}</span>
+                <h2 class="inline p-2 bg-red-600 to-red-600 rounded-l-lg">
+                    <span class="h-text text-white uppercase">{{ $item['label'] }}</span>
                 </h2>
                 <a class="inline uppercase self-center pr-3" href="{{ $item['link'] }}"><span
                         class="text-white hover:text-yellow-300">Xem
                         Thêm</span>
                 </a>
             </div>
-            <div class="owl-carousel movie-list-{{ $loop->index }} owl-theme">
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
                 @foreach ($item['data'] ?? [] as $movie)
                     @include('themes::ripple.inc.movie_card')
                 @endforeach
@@ -79,21 +78,23 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
     <script>
         $(document).ready(function() {
             $(".recommend-carousel").owlCarousel({
-                items: 2,
-                center: true,
+                items: 1,
+                center: false,
                 loop: true,
                 dots: false,
+                nav:true,
                 margin: 10,
-                stageOuterClass: 'owl-stage-outer p-2',
+                stagePadding:0,
+                stageOuterClass: 'owl-stage-outer',
                 responsive: {
                     1280: {
-                        items: 5
-                    },
-                    1024: {
                         items: 4
                     },
-                    768: {
+                    1024: {
                         items: 3
+                    },
+                    768: {
+                        items: 2
                     },
                 },
                 scrollPerPage: true,
@@ -102,29 +103,10 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
                 paginationSpeed: 400,
                 stopOnHover: true,
                 autoplay: true,
+                navText: [
+                    `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute top-1/3 left-0 text-red-500 bg-gradient-to-r from-[#151111] w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" /></svg>`,
+                    `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute top-1/3 right-0 text-red-500 bg-gradient-to-l from-[#151111] w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" /></svg>`],
             });
-            @foreach ($data as $item)
-                $(".movie-list-{{ $loop->index }}").owlCarousel({
-                    items: 2,
-                    center: true,
-                    loop: true,
-                    dots: true,
-                    margin: 10,
-                    stageOuterClass: 'owl-stage-outer p-2',
-                    responsive: {
-                        1280: {
-                            items: 5
-                        },
-                        1024: {
-                            items: 4
-                        },
-                        768: {
-                            items: 3
-                        },
-                    },
-                    lazyLoad: true,
-                });
-            @endforeach
         });
     </script>
 @endpush

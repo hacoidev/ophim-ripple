@@ -1,7 +1,7 @@
 @extends('themes::ripple.layout')
 
 @section('content')
-    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
+    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#1511116d] rounded" itemscope=""
         itemtype="https://schema.org/BreadcrumbList">
         <a href="/">
             <span class="text-white" itemprop="name">Trang Chủ ></span>
@@ -16,6 +16,40 @@
         <a href="{{ $movie->getUrl() }}">
             <span class="text-gray-400 italic whitespace-normal truncate">{{ $movie->name }}</span>
         </a>
+    </div>
+
+    <div class="flex rounded-lg p-2 text-[#bbb] bg-[#1511116d] mb-2">
+        <div class="w-full sm:w-1/2 md:w-[120px] flex justify-center pr-0 sm:pr-3">
+            <div class="max-w-xs container rounded-md w-[15em] h-[fit-content]">
+                <img class="w-full cursor-pointer rounded-t-md" style="aspect-ratio: 256/340" src="{{ $movie->thumb_url }}"
+                    alt="" />
+            </div>
+        </div>
+        <div class="w-full sm:w-1/2 md:grow mt-3 sm:mt-0">
+            <div class="w-full">
+                <h1>
+                    <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
+                        <a href="{{ URL::current() }}"
+                            title="{{ $movie->name }} - Tập
+                            {{ $movie->episodes[0]['name'] }}">{{ $movie->name }}
+                            - Tập
+                            {{ $movie->episodes[0]['name'] }}</a>
+                    </span>
+                </h1>
+                <h2>
+                    <span class="text-gray-300 text-base">{{ $movie->origin_name ?? '' }}</span>
+                    <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
+                </h2>
+                <article class="w-auto h-[98px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] p-1">
+                    @if ($movie->content)
+                        <div class="whitespace-pre-wrap">{!! $movie->content !!}</div>
+                    @else
+                        <p>Đang cập nhật ...</p>
+                    @endif
+                </article>
+            </div>
+
+        </div>
     </div>
 
     <div class="h-content">
@@ -69,12 +103,12 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-wrap justify-center gap-1 py-3 text-white"
-        id="stream-servers">
+    <div class="flex flex-wrap justify-center gap-1 py-3 text-white" id="stream-servers">
         @foreach ($movie->episodes->where('slug', $episode->slug)->where('server', $episode->server) as $server)
             <a onclick="chooseStreamingServer(this)" data-type="{{ $server->type }}" data-id="{{ $server->id }}"
                 data-link="{{ $server->link }}"
-                class="streaming-server hover:cursor-pointer uppercase current bg-[#151111] hover:bg-red-600 hover:bg-opacity-80 shadow-md px-2 py-1 mr-1 rounded text-sm">Nguồn phát #{{ $loop->index }}
+                class="streaming-server hover:cursor-pointer uppercase current bg-[#151111] hover:bg-red-600 hover:bg-opacity-80 shadow-md px-2 py-1 mr-1 rounded text-sm">Nguồn
+                phát #{{ $loop->index }}
             </a>
         @endforeach
     </div>

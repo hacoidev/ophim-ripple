@@ -1,7 +1,7 @@
 @extends('themes::ripple.layout')
 
 @section('content')
-    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
+    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#1511116d] rounded" itemscope=""
         itemtype="https://schema.org/BreadcrumbList">
         <a href="/">
             <span class="text-white" itemprop="name">Trang Chủ ></span>
@@ -17,19 +17,19 @@
     </div>
     <div class="flex flex-wrap flex-grow">
         <div class="w-full sm:w-1/2 md:w-[fit-content] flex justify-center pr-0 sm:pr-3">
-            <div class="max-w-xs container bg-[#151111] rounded-lg w-[15em] h-[fit-content]">
+            <div class="max-w-xs container bg-[#1511116d] rounded-lg w-[15em] h-[fit-content]">
                 <img class="w-full cursor-pointer rounded-t-lg" style="aspect-ratio: 256/340" src="{{ $movie->thumb_url }}"
                     alt="" />
                 <div class="flex py-3 justify-between">
                     <div class="flex w-full justify-center space-x-2">
                         @if ($movie->status == 'trailer' && $movie->trailer_url)
                             <a class="bg-[#d9534f] hover:bg-opacity-80 text-gray-50 inline-block px-2 py-1 rounded"
-                                title="Thỏa Thuận Bán Thân - Dangerous Memorandum Signed By The Body (2021)"
+                                title="{{ $movie->name }} - {{ $movie->origin_name }} ({{ $movie->publish_year }})"
                                 href="{{ $movie->trailer_url }}" target="__blank">Xem trailer
                             </a>
                         @elseif($movie->status != 'trailer' && count($movie->episodes))
                             <a class="bg-red-600 hover:bg-opacity-80 text-gray-50 inline-block px-2 py-1 rounded"
-                                title="Thỏa Thuận Bán Thân - Dangerous Memorandum Signed By The Body (2021)"
+                                title="{{ $movie->name }} - {{ $movie->origin_name }} ({{ $movie->publish_year }})"
                                 href="{{ $movie->episodes->sortByDesc('name', SORT_NATURAL)->first()->getUrl() }}">Xem phim
                             </a>
                         @else
@@ -40,14 +40,16 @@
             </div>
         </div>
         <div class="w-full sm:w-1/2 md:grow mt-3 sm:mt-0">
-            <div class="w-full rounded-lg p-3 text-[#bbb] bg-[#272727]">
+            <div class="w-full rounded-lg p-3 text-[#bbb] bg-[#1511116d]">
                 <h1>
                     <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
                         <a href="{{ $movie->getUrl() }}" title="{{ $movie->name }}">{{ $movie->name }}</a>
                     </span>
+                </h1>
+                <h2>
                     <span class="text-gray-300 text-base">{{ $movie->origin_name ?? '' }}</span>
                     <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
-                </h1>
+                </h2>
                 <div class="my-1">
                     <div class="flex-none lg:flex items-center">
                         <p class="flex items-center">
@@ -160,7 +162,7 @@
 
         </div>
 
-        <article class="mt-2.5 p-3 bg-[#272727] mb-3 rounded-lg">
+        <article class="mt-2.5 p-3 bg-[#1511116d] mb-3 rounded-lg">
             <h2 class="text-sm font-bold text-[#dacb46] uppercase mt-1.5 mb-3">Nội dung phim</h2>
             <div class="content text-white">
                 @if ($movie->content)

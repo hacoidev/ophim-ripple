@@ -64,7 +64,7 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
                     @foreach ($tops as $top)
                         <div class="rounded mb-3">
                             <div class="flex bg-[#1511116d] rounded-lg p-0 mb-0">
-                                <div class="section-heading bg-[red] rounded-l-lg">
+                                <div class="section-heading bg-red-600 rounded-l-lg">
                                     <h3 class="px-2 py-1"><span
                                             class="h-text text-white uppercase ">{{ $top['label'] }}</span></h3>
                                 </div>
@@ -75,7 +75,7 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
                                         <a href="{{ $movie->getUrl() }}"
                                             class="flex bg-[#1511116d] rounded-lg w-15 h-20 my-2">
                                             <img class="object-cover rounded-l-lg" style="aspect-ratio: 256 / 340"
-                                                src="{{ $movie->thumb_url }}" alt="">
+                                                src="{{ $movie->thumb_url }}" alt="{{ $movie->origin_name }} ({{ $movie->publish_year }})">
                                             <div class="px-3 py-1 truncate">
                                                 <p
                                                     class="capitalize block overflow-hidden overflow-ellipsis whitespace-nowrap text-[#44e2ff] hover:text-yellow-300">
