@@ -52,6 +52,7 @@ class RippleController
             return view('themes::ripple.catalog', [
                 'data' => $data,
                 'search' => $request['search'],
+                'section_name' => "Tìm kiếm phim: $request->search"
             ]);
         }
         return view('themes::ripple.index', [
@@ -142,7 +143,8 @@ class RippleController
         return view('themes::ripple.catalog', [
             'data' => $movies,
             'category' => $category,
-            'title' => $category->seo_title ?: $category->getTitle()
+            'title' => $category->seo_title ?: $category->getTitle(),
+            'section_name' => "Phim thể loại $category->name"
         ]);
     }
 
@@ -160,7 +162,8 @@ class RippleController
         return view('themes::ripple.catalog', [
             'data' => $movies,
             'region' => $region,
-            'title' => $region->seo_title ?: $region->getTitle()
+            'title' => $region->seo_title ?: $region->getTitle(),
+            'section_name' => "Phim quốc gia $region->name"
         ]);
     }
 
@@ -178,7 +181,8 @@ class RippleController
         return view('themes::ripple.catalog', [
             'data' => $movies,
             'person' => $actor,
-            'title' => $actor->getTitle()
+            'title' => $actor->getTitle(),
+            'section_name' => "Diễn viên $actor->name"
         ]);
     }
 
@@ -196,7 +200,8 @@ class RippleController
         return view('themes::ripple.catalog', [
             'data' => $movies,
             'person' => $director,
-            'title' => $director->getTitle()
+            'title' => $director->getTitle(),
+            'section_name' => "Đạo diễn $director->name"
         ]);
     }
 
@@ -210,22 +215,24 @@ class RippleController
         $tag->generateSeoTags();
 
         $movies = $tag->movies()->paginate(20);
-
         return view('themes::ripple.catalog', [
             'data' => $movies,
             'tag' => $tag,
-            'title' => $tag->getTitle()
+            'title' => $tag->getTitle(),
+            'section_name' => "Tags: $tag->name"
         ]);
     }
 
     public function getMovieOfType(Request $request, $slug)
     {
         $type = $slug == 'phim-le' ? 'single' : 'series';
+        $section_name = $slug == 'phim-le' ? 'Phim Lẻ' : 'Phim Bộ';
 
         $movies = Movie::where('type', $type)->paginate(20);
 
         return view('themes::ripple.catalog', [
             'data' => $movies,
+            'section_name' => "Danh sách $section_name"
         ]);
     }
 }

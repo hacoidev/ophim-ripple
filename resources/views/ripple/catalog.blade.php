@@ -88,14 +88,20 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
 
     <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-2">
         <h2 class="inline p-1.5 bg-[red] rounded-l-lg">
-            <span class="h-text text-white">Kết quả tìm kiếm: </span>
+            <span class="h-text text-white">
+                @if(isset($section_name))
+                    {{ $section_name }}
+                @else
+                    Danh Sách Phim
+                @endif
+            </span>
         </h2>
-        @if (isset($person))
+        {{-- @if (isset($person))
             <h3 class="text-white flex items-center overflow-hidden uppercase px-2 italic">
                 {{ $person->name }}</h3>
         @else
             <h3 class="text-white flex items-center overflow-hidden uppercase px-2 italic"> {{ request('search') }}</h3>
-        @endif
+        @endif --}}
     </div>
     @if (count($data))
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">

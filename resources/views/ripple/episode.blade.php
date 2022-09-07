@@ -42,7 +42,7 @@
                 <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
             </h2>
 
-            <article class="w-auto h-[50px] md:h-[99px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] p-1">
+            <article class="w-auto h-[50px] md:h-[99px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] bg-opacity-50 p-1">
                 @if ($movie->content)
                     <div class="whitespace-pre-wrap">{!! $movie->content !!}</div>
                 @else
@@ -55,7 +55,7 @@
     @if ($movie->showtimes && $movie->showtimes != '')
         <div class="mt-2.5 p-2 bg-[#1511116d] mb-1 rounded-lg text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6 inline">
+                stroke="currentColor" class="w-6 h-6 inline animate-pulse">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
             </svg>
@@ -65,7 +65,7 @@
     @if ($movie->notify && $movie->notify != '')
         <div class="mt-2.5 p-2 bg-[#1511116d] mb-2 rounded-lg text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6 inline">
+                stroke="currentColor" class="w-6 h-6 inline animate-pulse">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
             </svg>
@@ -78,8 +78,7 @@
     </div>
 
     <div class="flex justify-between mt-1">
-        <div class="text-[#FDB813] mb-2 font-bold text-sm mt-2">Mẹo: Chọn phần của tập phim hoặc đổi nguồn phát
-            dự phòng ở bên dưới nếu lỗi!</div>
+        <div class="text-[#FDB813] mb-2 font-bold text-sm mt-2">Mẹo: Chọn Server hoặc Nguồn phát khác khi lỗi!</div>
         <div class="bg-[#151111] hover:bg-red-600 items-center font-bold text-sm text-white shadow text-center py-1 px-2 rounded cursor-pointer self-center"
             data-modal-toggle="report-modal">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
@@ -185,7 +184,10 @@
         data-numposts="5" data-colorscheme="dark" data-lazy="true">
     </div>
 
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.20.0/dist/full.css" rel="stylesheet" type="text/css" />
+@endsection
+
+@section("footer")
+    @parent
     <script src="/js/jwplayer-8.9.3.js"></script>
     <script src="/js/hls.min.js"></script>
     <script src="/js/jwplayer.hlsjs.min.js"></script>
