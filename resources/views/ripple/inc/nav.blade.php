@@ -6,12 +6,13 @@ $title = isset($title) ? $title : setting('site_homepage_title', '');
 
 <nav class="w-full fixed top-0 py-2 bg-[#151111] border-gray-200 z-30">
     <div class="container mx-auto px-4 md:px-8 xl:px-40 flex flex-wrap justify-between items-center">
-        <div class="w-2/5 md:w-1/5 py-2">
-            <a class="text-gray-100 text-base xl:text-xl no-underline hover:no-underline font-bold" href="/">
+        <div class="w-2/5 md:w-1/5 flex items-center">
+            <a class="text-gray-100 text-base xl:text-xl no-underline hover:no-underline font-bold content-center" href="/">
                 @if ($logo)
                     {!! $logo !!}
+                @else
+                    {!! $brand !!}
                 @endif
-                {!! $brand !!}
             </a>
             <h1 class="cursor-pointer w-max inline-flex" style="text-indent:-9999px">{{ $title }}</h1>
         </div>

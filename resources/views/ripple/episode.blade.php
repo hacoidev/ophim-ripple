@@ -4,17 +4,17 @@
     <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
         itemtype="https://schema.org/BreadcrumbList">
         <a href="/">
-            <span class="text-xs font-bold text-white" itemprop="name">Trang Chủ ></span>
+            <span class="text-white" itemprop="name">Trang Chủ ></span>
         </a>
         <span class="truncate">
             @foreach ($movie->categories as $category)
                 <a href="{{ $category->getUrl() }}">
-                    <span class="text-xs font-bold text-white" itemprop="name">{{ $category->name }} ></span>
+                    <span class="text-white" itemprop="name">{{ $category->name }} ></span>
                 </a>
             @endforeach
         </span>
         <a href="{{ $movie->getUrl() }}">
-            <span class="text-gray-400 text-xs font-bold italic whitespace-normal truncate">{{ $movie->name }}</span>
+            <span class="text-gray-400 italic whitespace-normal truncate">{{ $movie->name }}</span>
         </a>
     </div>
 
@@ -25,7 +25,7 @@
     <div class="flex justify-between mt-1">
         <div class="text-[#FDB813] mb-2 font-bold text-sm mt-2">Mẹo: Chọn phần của tập phim hoặc đổi nguồn phát
             dự phòng ở bên dưới nếu lỗi!</div>
-        <div class="bg-[#151111] hover:bg-gray-900 font-bold text-sm text-white shadow text-center py-1 px-2 rounded cursor-pointer self-center"
+        <div class="bg-[#151111] hover:bg-red-600 items-center font-bold text-sm text-white shadow text-center py-1 px-2 rounded cursor-pointer self-center"
             data-modal-toggle="report-modal">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" aria-hidden="true" class="w-5 h-5 inline">
@@ -69,31 +69,32 @@
             </div>
         </div>
     </div>
-    <div class="flex flex-wrap justify-center gap-1 border-t-[1px] border-solid border-[#555] py-3 text-white"
+    <div class="flex flex-wrap justify-center gap-1 py-3 text-white"
         id="stream-servers">
         @foreach ($movie->episodes->where('slug', $episode->slug)->where('server', $episode->server) as $server)
             <a onclick="chooseStreamingServer(this)" data-type="{{ $server->type }}" data-id="{{ $server->id }}"
                 data-link="{{ $server->link }}"
-                class="streaming-server hover:cursor-pointer uppercase current bg-slate-600 px-3 py-2 mr-1 rounded text-sm">Dự
-                phòng #{{ $loop->index }}
+                class="streaming-server hover:cursor-pointer uppercase current bg-[#151111] hover:bg-red-600 hover:bg-opacity-80 shadow-md px-2 py-1 mr-1 rounded text-sm">Nguồn phát #{{ $loop->index }}
             </a>
         @endforeach
     </div>
-    <div class="my-3 flex justify-center bg-slate-500 rounded-sm py-1">
-        <div class="rating rating-md md:rating-lg">
-            @for ($i = 1; $i <= 10; $i++)
-                <input type="radio" name="rating" class="mask mask-star-2 bg-orange-500" value={{ $i }}
-                    @if ($i == 9) checked @endif />
-            @endfor
+    <div class="my-3 p-1 md:flex justify-center items-center gap-x-2 bg-[#272727] rounded-sm">
+        <div id="movies-rating-star" class="flex"></div>
+        <div class="text-xs text-white align-middle">
+            ({{ number_format($movie->rating_star ?? 0, 1) }}
+            sao
+            /
+            {{ $movie->rating_count ?? 0 }} đánh giá)
         </div>
+        <div id="movies-rating-msg" class="text-[#FDB813] mb-2 font-bold text-sm mt-2"></div>
     </div>
+
     @foreach ($movie->episodes->groupBy('server') as $server => $data)
-        <div class="flex flex-col my-3 mt-6">
+        <div class="flex flex-col my-3 mt-6 p-2 bg-[#272727] bg-opacity-50">
             <h2 id="heading-{{ $loop->index }}">
-                <button
-                    class="flex justify-between w-full px-4 py-2 text-sm font-medium text-left text-slate-200 bg-sky-800 rounded-sm"
+                <button class="flex justify-between w-full py-2 font-medium text-left text-slate-200 rounded-sm"
                     data-accordion-target="#body-{{ $loop->index }}">
-                    <span>{{ $server }}</span>
+                    <span>Danh sách tập: <span class="text-red-600">{{ $server }}</span></span>
                     <svg data-accordion-icon class="w-6 h-6 shrink-0" fill="currentColor" viewBox="0 0 20 20"
                         xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
@@ -103,9 +104,9 @@
                 </button>
             </h2>
             <div id="body-{{ $loop->index }}" class="mt-2">
-                <div class="w-full grid grid-cols-3 md:grid-cols-6 lg:grid-cols-16 gap-2">
+                <div class="w-full grid grid-cols-3 md:grid-cols-6 lg:grid-cols-12 gap-2">
                     @foreach ($data->sortBy('name', SORT_NATURAL)->groupBy('name') as $name => $item)
-                        <a class="episode grow text-center hover:cursor-pointer shadow text-white py-2 bg-slate-600 rounded @if ($item->contains($episode)) bg-slate-900 @endif"
+                        <a class="episode grow text-center hover:cursor-pointer shadow text-white py-1 bg-[#151111] hover:bg-red-600 hover:bg-opacity-80 shadow-md rounded @if ($item->contains($episode)) bg-red-600 @endif"
                             title="{{ $name }}" href="{{ $item->first()->getUrl() }}">
                             {{ $name }}
                         </a>
@@ -123,6 +124,44 @@
     <script src="/js/jwplayer-8.9.3.js"></script>
     <script src="/js/hls.min.js"></script>
     <script src="/js/jwplayer.hlsjs.min.js"></script>
+
+    {{-- Star Rating Plugins --}}
+    <script src="/themes/ripple/js/plugins/jquery-raty/jquery.raty.js"></script>
+    <script src="/themes/ripple/js/plugins/jquery-raty/jquery.raty.css"></script>
+
+    <script>
+        var rated = false;
+        $('#movies-rating-star').raty({
+            score: {{ number_format($movie->rating_star ?? 0, 1) }},
+            number: 10,
+            numberMax: 10,
+            hints: ['quá tệ', 'tệ', 'không hay', 'không hay lắm', 'bình thường', 'xem được', 'có vẻ hay', 'hay',
+                'rất hay', 'siêu phẩm'
+            ],
+            starOff: '/themes/ripple/js/plugins/jquery-raty/images/star-off.png',
+            starOn: '/themes/ripple/js/plugins/jquery-raty/images/star-on.png',
+            click: function(score, evt) {
+                if (rated) return
+                fetch("{{ route('movie.rating', ['movie' => $movie->slug, 'episode' => $episode->slug]) }}", {
+                    method: 'POST',
+                    headers: {
+                        "Content-Type": "application/json",
+                        'X-CSRF-TOKEN': document.querySelector(
+                                'meta[name="csrf-token"]')
+                            .getAttribute(
+                                'content')
+                    },
+                    body: JSON.stringify({
+                        rating: score
+                    })
+                });
+                rated = true;
+                $('#movies-rating-star').data('raty').readOnly(true);
+                $('#movies-rating-msg').html(`Bạn đã đánh giá ${score} sao cho phim này!`);
+            }
+        });
+    </script>
+
     <script>
         const wrapper = document.getElementById('player-wrapper');
 
@@ -142,9 +181,9 @@
             }, "", newUrl);
 
             Array.from(document.getElementsByClassName('streaming-server')).forEach(server => {
-                server.classList.remove('bg-slate-900');
+                server.classList.remove('bg-red-600');
             })
-            el.classList.add('bg-slate-900')
+            el.classList.add('bg-red-600')
 
             renderPlayer(type, link);
         }
@@ -232,28 +271,5 @@
                 })
             });
         })
-
-        var rated = false;
-        const radios = document.querySelectorAll('input[name="rating"]');
-        radios.forEach(radio => {
-            radio.addEventListener('click', function() {
-                if (rated) return
-                fetch("{{ route('movie.rating', ['movie' => $movie->slug, 'episode' => $episode->slug]) }}", {
-                    method: 'POST',
-                    headers: {
-                        "Content-Type": "application/json",
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]')
-                            .getAttribute(
-                                'content')
-                    },
-                    body: JSON.stringify({
-                        rating: radio.value
-                    })
-                });
-                rated = true;
-            }, {
-                once: true
-            });
-        });
     </script>
 @endsection

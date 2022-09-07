@@ -48,7 +48,7 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
 @section('body')
     @include('themes::ripple.inc.nav')
     <div class="w-full pt-14">
-        <div class="container mx-auto px-4 md:px-8 xl:px-40 md:mt-8 mb-16 text-gray-800 leading-normal">
+        <div class="container mx-auto px-4 md:px-8 xl:px-40 md:mt-4 mb-8 text-gray-800 leading-normal">
             <div class="flex flex-row flex-wrap flex-grow mt-2">
                 @if (get_theme_option('ads_header'))
                     {!! get_theme_option('ads_header') !!}

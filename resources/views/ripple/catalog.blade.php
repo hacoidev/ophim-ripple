@@ -12,10 +12,10 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
 @section('content')
     <div class="breadcrumb w-full px-2 py-2 mb-3 bg-[#151111] rounded-lg">
         <a href="/">
-            <span class="text-xs font-bold text-white" itemprop="name">Trang Chủ ></span>
+            <span class="text-white" itemprop="name">Trang Chủ ></span>
         </a>
         <a href="{{ url()->current() }}">
-            <span class="text-gray-400 text-xs font-bold italic whitespace-normal truncate">Tìm kiếm</span>
+            <span class="text-gray-400 italic whitespace-normal truncate">Tìm kiếm</span>
         </a>
     </div>
     <div class="text-[#ddd] mb-3">

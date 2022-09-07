@@ -4,15 +4,15 @@
     <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
         itemtype="https://schema.org/BreadcrumbList">
         <a href="/">
-            <span class="text-xs font-bold text-white" itemprop="name">Trang Chủ ></span>
+            <span class="text-white" itemprop="name">Trang Chủ ></span>
         </a>
         @foreach ($movie->categories as $category)
             <a href="{{ $category->getUrl() }}">
-                <span class="text-xs font-bold text-white" itemprop="name">{{ $category->name }} ></span>
+                <span class="text-white" itemprop="name">{{ $category->name }} ></span>
             </a>
         @endforeach
         <a href="{{ $movie->getUrl() }}">
-            <span class="text-gray-400 text-xs font-bold italic whitespace-normal">{{ $movie->name }}</span>
+            <span class="text-gray-400 italic whitespace-normal">{{ $movie->name }}</span>
         </a>
     </div>
     <div class="flex flex-wrap flex-grow">
@@ -23,12 +23,12 @@
                 <div class="flex py-3 justify-between">
                     <div class="flex w-full justify-center space-x-2">
                         @if ($movie->status == 'trailer' && $movie->trailer_url)
-                            <a class="bg-[#d9534f] text-gray-50 inline-block px-2 py-1 rounded"
+                            <a class="bg-[#d9534f] hover:bg-opacity-80 text-gray-50 inline-block px-2 py-1 rounded"
                                 title="Thỏa Thuận Bán Thân - Dangerous Memorandum Signed By The Body (2021)"
                                 href="{{ $movie->trailer_url }}" target="__blank">Xem trailer
                             </a>
                         @elseif($movie->status != 'trailer' && count($movie->episodes))
-                            <a class="bg-[#d9534f] text-gray-50 inline-block px-2 py-1 rounded"
+                            <a class="bg-red-600 hover:bg-opacity-80 text-gray-50 inline-block px-2 py-1 rounded"
                                 title="Thỏa Thuận Bán Thân - Dangerous Memorandum Signed By The Body (2021)"
                                 href="{{ $movie->episodes->sortByDesc('name', SORT_NATURAL)->first()->getUrl() }}">Xem phim
                             </a>
@@ -157,7 +157,6 @@
                         {{ number_format($movie->view_total ?? 0) }} lượt</dd>
                 </dl>
             </div>
-
 
         </div>
 
