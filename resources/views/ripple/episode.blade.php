@@ -1,7 +1,7 @@
 @extends('themes::ripple.layout')
 
 @section('content')
-    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#1511116d] rounded" itemscope=""
+    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
         itemtype="https://schema.org/BreadcrumbList">
         <a href="/">
             <span class="text-white" itemprop="name">Trang Chủ ></span>
@@ -18,39 +18,60 @@
         </a>
     </div>
 
-    <div class="flex rounded-lg p-2 text-[#bbb] bg-[#1511116d] mb-2">
-        <div class="w-full sm:w-1/2 md:w-[120px] flex justify-center pr-0 sm:pr-3">
-            <div class="max-w-xs container rounded-md w-[15em] h-[fit-content]">
-                <img class="w-full cursor-pointer rounded-t-md" style="aspect-ratio: 256/340" src="{{ $movie->thumb_url }}"
+    <div class="flex rounded-lg p-0 md:p-2 text-[#bbb] bg-[#1511116d] mb-2">
+        <div class="w-[120px] md:w-[145px] pr-0">
+            <div class="rounded-md w-full h-[fit-content] p-2">
+                <img class="w-full cursor-pointer rounded-md" style="aspect-ratio: 256/340" src="{{ $movie->thumb_url }}"
                     alt="" />
             </div>
         </div>
-        <div class="w-full sm:w-1/2 md:grow mt-3 sm:mt-0">
-            <div class="w-full">
-                <h1>
-                    <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
-                        <a href="{{ URL::current() }}"
-                            title="{{ $movie->name }} - Tập
-                            {{ $movie->episodes[0]['name'] }}">{{ $movie->name }}
-                            - Tập
-                            {{ $movie->episodes[0]['name'] }}</a>
-                    </span>
-                </h1>
-                <h2>
-                    <span class="text-gray-300 text-base">{{ $movie->origin_name ?? '' }}</span>
-                    <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
-                </h2>
-                <article class="w-auto h-[98px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] p-1">
-                    @if ($movie->content)
-                        <div class="whitespace-pre-wrap">{!! $movie->content !!}</div>
-                    @else
-                        <p>Đang cập nhật ...</p>
-                    @endif
-                </article>
-            </div>
 
+        <div class="w-full pr-2">
+            <h1>
+                <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
+                    <a href="{{ URL::current() }}"
+                        title="{{ $movie->name }} - Tập
+                        {{ $movie->episodes[0]['name'] }}">{{ $movie->name }}
+                        - Tập
+                        {{ $movie->episodes[0]['name'] }}</a>
+                </span>
+            </h1>
+
+            <h2>
+                <span class="text-gray-300 text-base">{{ $movie->origin_name ?? '' }}</span>
+                <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
+            </h2>
+
+            <article class="w-auto h-[50px] md:h-[99px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] p-1">
+                @if ($movie->content)
+                    <div class="whitespace-pre-wrap">{!! $movie->content !!}</div>
+                @else
+                    <p>Đang cập nhật ...</p>
+                @endif
+            </article>
         </div>
     </div>
+
+    @if ($movie->showtimes && $movie->showtimes != '')
+        <div class="mt-2.5 p-2 bg-[#1511116d] mb-1 rounded-lg text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6 inline">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+            </svg>
+            Lịch chiếu: <span class="text-yellow-500">{!! $movie->showtimes !!}</span>
+        </div>
+    @endif
+    @if ($movie->notify && $movie->notify != '')
+        <div class="mt-2.5 p-2 bg-[#1511116d] mb-2 rounded-lg text-gray-300">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6 inline">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
+            </svg>
+            Thông báo: <span class="text-red-500">{{ strip_tags($movie->notify) }}</span>
+        </div>
+    @endif
 
     <div class="h-content">
         <div class="flex iframe w-full" style="aspect-ratio: 16 / 9;" id="player-wrapper"></div>
@@ -112,7 +133,7 @@
             </a>
         @endforeach
     </div>
-    <div class="my-3 p-1 md:flex justify-center items-center gap-x-2 bg-[#272727] rounded-sm">
+    <div class="my-3 p-2 md:flex justify-center items-center gap-x-2 bg-[#272727] rounded-sm">
         <div id="movies-rating-star" class="flex"></div>
         <div class="text-xs text-white align-middle">
             ({{ number_format($movie->rating_star ?? 0, 1) }}
@@ -138,7 +159,7 @@
                 </button>
             </h2>
             <div id="body-{{ $loop->index }}" class="mt-2">
-                <div class="w-full grid grid-cols-3 md:grid-cols-6 lg:grid-cols-12 gap-2">
+                <div class="w-full grid grid-cols-4 md:grid-cols-6 lg:grid-cols-12 gap-2">
                     @foreach ($data->sortBy('name', SORT_NATURAL)->groupBy('name') as $name => $item)
                         <a class="episode grow text-center hover:cursor-pointer shadow text-white py-1 bg-[#151111] hover:bg-red-600 hover:bg-opacity-80 shadow-md rounded @if ($item->contains($episode)) bg-red-600 @endif"
                             title="{{ $name }}" href="{{ $item->first()->getUrl() }}">
@@ -149,6 +170,16 @@
             </div>
         </div>
     @endforeach
+
+    <div class="mt-1.5">{!! $movie->tags->map(function ($tag) {
+            return '<a class="bg-[#111] text-[#ccc] hover:text-white px-2 border-[#333] border-[1px]" href="' .
+                $tag->getUrl() .
+                '" title="' .
+                $tag->name .
+                '">' .
+                $tag->name .
+                '</a>';
+        })->implode(', ') !!}</div>
 
     <div class="fb-comments w-full rounded-lg bg-white" data-href="{{ $episode->getUrl() }}" data-width="100%"
         data-numposts="5" data-colorscheme="dark" data-lazy="true">
@@ -197,18 +228,27 @@
     </script>
 
     <script>
+        $(document).ready(function() {
+            $('html, body').animate({
+                scrollTop: $('#player-wrapper').offset().top - 60
+            }, 'slow');
+        });
+    </script>
+
+    <script>
         const wrapper = document.getElementById('player-wrapper');
 
         function chooseStreamingServer(el) {
             const type = el.dataset.type;
             const link = el.dataset.link;
+            const id = el.dataset.id;
 
             const newUrl =
                 location.protocol +
                 "//" +
                 location.host +
                 location.pathname +
-                "?id=" + el.dataset.id;
+                "?id=" + id;
 
             history.pushState({
                 path: newUrl
@@ -219,10 +259,10 @@
             })
             el.classList.add('bg-red-600')
 
-            renderPlayer(type, link);
+            renderPlayer(type, link, id);
         }
 
-        function renderPlayer(type, link) {
+        function renderPlayer(type, link, id) {
             if (type == 'embed') {
                 if (wrapper) {
                     wrapper.innerHTML = `<iframe width="100%" height="100%" src="${link}" frameborder="0" scrolling="no"
@@ -269,6 +309,50 @@
                 };
 
                 player.setup(objSetup);
+                const resumeData = 'OPCMS-PlayerPosition-' + id;
+
+                player.on('ready', function() {
+                    if (typeof(Storage) !== 'undefined') {
+                        if (localStorage[resumeData] == '' || localStorage[resumeData] == 'undefined') {
+                            console.log("No cookie for position found");
+                            var currentPosition = 0;
+                        } else {
+                            if (localStorage[resumeData] == "null") {
+                                localStorage[resumeData] = 0;
+                            } else {
+                                var currentPosition = localStorage[resumeData];
+                            }
+                            console.log("Position cookie found: " + localStorage[resumeData]);
+                        }
+                        player.once('play', function() {
+                            console.log('Checking position cookie!');
+                            console.log(Math.abs(player.getDuration() - currentPosition));
+                            if (currentPosition > 180 && Math.abs(player.getDuration() - currentPosition) >
+                                5) {
+                                player.seek(currentPosition);
+                            }
+                        });
+                        window.onunload = function() {
+                            localStorage[resumeData] = player.getPosition();
+                        }
+                    } else {
+                        console.log('Your browser is too old!');
+                    }
+                });
+
+                player.on('complete', function() {
+                    if (typeof(Storage) !== 'undefined') {
+                        localStorage.removeItem(resumeData);
+                    } else {
+                        console.log('Your browser is too old!');
+                    }
+                })
+
+                function formatSeconds(seconds) {
+                    var date = new Date(1970, 0, 1);
+                    date.setSeconds(seconds);
+                    return date.toTimeString().replace(/.*(\d{2}:\d{2}:\d{2}).*/, "$1");
+                }
             }
         }
     </script>

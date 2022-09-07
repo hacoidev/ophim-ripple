@@ -10,7 +10,7 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
 @endphp
 
 @section('content')
-    <div class="breadcrumb w-full px-2 py-2 mb-3 bg-[#1511116d] rounded-lg">
+    <div class="breadcrumb w-full px-2 py-2 mb-3 bg-[#151111] rounded-lg">
         <a href="/">
             <span class="text-white" itemprop="name">Trang Chủ ></span>
         </a>
@@ -86,8 +86,8 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
         </div>
     </div>
 
-    <div class="section-heading flex bg-[#1511116d] rounded-lg p-0 mb-2">
-        <h2 class="inline p-2 bg-[red] rounded-l-lg">
+    <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-2">
+        <h2 class="inline p-1.5 bg-[red] rounded-l-lg">
             <span class="h-text text-white">Kết quả tìm kiếm: </span>
         </h2>
         @if (isset($person))
@@ -98,7 +98,7 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
         @endif
     </div>
     @if (count($data))
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-3">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
             @foreach ($data ?? [] as $movie)
                 @include('themes::ripple.inc.movie_card')
             @endforeach

@@ -56,8 +56,8 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
 
     @foreach ($data as $item)
         <div class="mb-5 ">
-            <div class="section-heading flex bg-[#1511116d] rounded-lg p-0 mb-3 justify-between content-between">
-                <h2 class="inline p-2 bg-red-600 to-red-600 rounded-l-lg">
+            <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-3 justify-between content-between">
+                <h2 class="inline p-1.5 bg-red-600 to-red-600 rounded-l-lg">
                     <span class="h-text text-white uppercase">{{ $item['label'] }}</span>
                 </h2>
                 <a class="inline uppercase self-center pr-3" href="{{ $item['link'] }}"><span

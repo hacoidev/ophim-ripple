@@ -63,7 +63,7 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
                 <div class="w-full lg:w-1/4 xl:w-1/4 pl-0 lg:pl-3 mt-3 lg:mt-0">
                     @foreach ($tops as $top)
                         <div class="rounded mb-3">
-                            <div class="flex bg-[#1511116d] rounded-lg p-0 mb-0">
+                            <div class="flex bg-[#151111] rounded-lg p-0 mb-0">
                                 <div class="section-heading bg-red-600 rounded-l-lg">
                                     <h3 class="px-2 py-1"><span
                                             class="h-text text-white uppercase ">{{ $top['label'] }}</span></h3>
