@@ -96,12 +96,6 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
                 @endif
             </span>
         </h2>
-        {{-- @if (isset($person))
-            <h3 class="text-white flex items-center overflow-hidden uppercase px-2 italic">
-                {{ $person->name }}</h3>
-        @else
-            <h3 class="text-white flex items-center overflow-hidden uppercase px-2 italic"> {{ request('search') }}</h3>
-        @endif --}}
     </div>
     @if (count($data))
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
