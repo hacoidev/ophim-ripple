@@ -15,7 +15,9 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
             <span class="text-white" itemprop="name">Trang Chủ ></span>
         </a>
         <a href="{{ url()->current() }}">
-            <span class="text-gray-400 italic whitespace-normal truncate">Tìm kiếm</span>
+            <span class="text-gray-400 italic whitespace-normal truncate">
+                {{ $section_name ?? "Danh Sách Phim" }}
+            </span>
         </a>
     </div>
     <div class="text-[#ddd] mb-3">
@@ -89,11 +91,7 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
     <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-2">
         <h2 class="inline p-1.5 bg-[red] rounded-l-lg">
             <span class="h-text text-white">
-                @if(isset($section_name))
-                    {{ $section_name }}
-                @else
-                    Danh Sách Phim
-                @endif
+                {{ $section_name ?? "Danh Sách Phim" }}
             </span>
         </h2>
     </div>
