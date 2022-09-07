@@ -10,9 +10,10 @@
             {{ $movie->origin_name }} ({{ $movie->publish_year }})
         </div>
     </span>
-    {{-- gradient-to-r from-cyan-500 to-blue-500 --}}
     <span class="absolute top-0 left-0 p-0.5 bg-red-600 text-white text-sm rounded-md rounded-bl-none rounded-tr-none">{{ $movie->episode_current }}</span>
-    <span class="absolute bottom-12 right-0 p-0.5 bg-gradient-to-r from-cyan-500/50 to-blue-500/50 text-white text-sm rounded-md rounded-br-none rounded-tr-none">{{ $movie->language }} {{ $movie->quality }}</span>
+    @if ($movie->status == 'ongoing')
+        <span class="absolute bottom-12 right-0 p-0.5 bg-gradient-to-r from-cyan-500/50 to-blue-500/50 text-white text-sm rounded-md rounded-br-none rounded-tr-none">Đang chiếu</span>
+    @endif
     <div class="absolute hidden top-1/4 left-1/3 animate-pulse group-hover:block">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-red-600" fill="none"
             viewBox="0 0 24 24" stroke="currentColor">

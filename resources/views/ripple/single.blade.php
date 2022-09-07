@@ -6,9 +6,14 @@
         <a href="/">
             <span class="text-white" itemprop="name">Trang Chủ ></span>
         </a>
+        @foreach ($movie->regions as $region)
+            <a href="{{ $region->getUrl() }}">
+                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $region->name }} ></span>
+            </a>
+        @endforeach
         @foreach ($movie->categories as $category)
             <a href="{{ $category->getUrl() }}">
-                <span class="text-white" itemprop="name">{{ $category->name }} ></span>
+                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $category->name }} ></span>
             </a>
         @endforeach
         <a href="{{ $movie->getUrl() }}">
@@ -116,7 +121,7 @@
                                         </path>
                                     </svg>
                                 @else
-                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-300 dark:text-gray-500"
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-300"
                                         fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <title>dark star</title>
                                         <path

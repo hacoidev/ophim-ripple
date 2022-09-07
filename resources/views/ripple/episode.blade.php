@@ -4,15 +4,18 @@
     <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
         itemtype="https://schema.org/BreadcrumbList">
         <a href="/">
-            <span class="text-white" itemprop="name">Trang Chủ ></span>
+            <span class="text-white hover:text-yellow-400" itemprop="name">Trang Chủ ></span>
         </a>
-        <span class="truncate">
-            @foreach ($movie->categories as $category)
-                <a href="{{ $category->getUrl() }}">
-                    <span class="text-white" itemprop="name">{{ $category->name }} ></span>
-                </a>
-            @endforeach
-        </span>
+        @foreach ($movie->regions as $region)
+            <a href="{{ $region->getUrl() }}">
+                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $region->name }} ></span>
+            </a>
+        @endforeach
+        @foreach ($movie->categories as $category)
+            <a href="{{ $category->getUrl() }}">
+                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $category->name }} ></span>
+            </a>
+        @endforeach
         <a href="{{ $movie->getUrl() }}">
             <span class="text-gray-400 italic whitespace-normal truncate">{{ $movie->name }}</span>
         </a>
@@ -30,9 +33,7 @@
             <h1>
                 <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
                     <a href="{{ URL::current() }}"
-                        title="{{ $movie->name }} - Tập
-                        {{ $movie->episodes[0]['name'] }}">{{ $movie->name }}
-                        - Tập
+                        title="{{ $movie->name }} - Tập {{ $movie->episodes[0]['name'] }}">{{ $movie->name }} - Tập
                         {{ $movie->episodes[0]['name'] }}</a>
                 </span>
             </h1>
@@ -42,7 +43,8 @@
                 <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
             </h2>
 
-            <article class="w-auto h-[50px] md:h-[99px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] bg-opacity-50 p-1">
+            <article
+                class="w-auto h-[56px] md:h-[96px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] bg-opacity-50 p-1 mt-1">
                 @if ($movie->content)
                     <div class="whitespace-pre-wrap">{!! $movie->content !!}</div>
                 @else
@@ -78,8 +80,8 @@
     </div>
 
     <div class="flex justify-between mt-1">
-        <div class="text-[#FDB813] mb-2 font-bold text-sm mt-2">Mẹo: Chọn Server hoặc Nguồn phát khác khi lỗi!</div>
-        <div class="bg-[#151111] hover:bg-red-600 items-center font-bold text-sm text-white shadow text-center py-1 px-2 rounded cursor-pointer self-center"
+        <div class="text-[#FDB813] mb-2 text-sm mt-2">Mẹo: Chọn Server hoặc Nguồn phát khác khi lỗi!</div>
+        <div class="bg-[#151111] hover:bg-red-600 items-center text-sm text-white shadow text-center py-1 px-2 rounded cursor-pointer self-center"
             data-modal-toggle="report-modal">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" aria-hidden="true" class="w-5 h-5 inline">
@@ -92,14 +94,17 @@
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+            <div class="relative rounded-lg shadow bg-[#151111]">
                 <!-- Modal header -->
-                <div class="flex justify-between items-center p-5 rounded-t border-b dark:border-gray-600">
-                    <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+                <div class="flex justify-between items-center p-5 rounded-t border-b border-gray-600">
+                    <div class="text-xl font-medium text-red-600">
                         Báo lỗi phim
-                    </h3>
+                        <p class="text-yellow-500">
+                            {{ $movie->name }}
+                        </p>
+                    </div>
                     <button type="button"
-                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        class="text-gray-400 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center hover:bg-red-600 hover:text-white"
                         data-modal-toggle="report-modal" data>
                         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -112,13 +117,14 @@
                 </div>
                 <!-- Modal body -->
                 <div class="p-6 space-y-6">
-                    <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                        <textarea id="report_message" class="w-full p-3" rows="5">Không tải được tập phim</textarea>
+                    <p class="text-base leading-relaxed text-gray-400">
+                        <textarea id="report_message" class="w-full p-3 bg-[#272727] text-white focus:outline-none" rows="5"
+                            placeholder="Hãy nhập nội dung lỗi để chúng mình sửa nhanh hơn...">Không tải được tập phim</textarea>
                     </p>
                 </div>
-                <div class="flex justify-end p-6 space-x-2 rounded-b border-t border-gray-200 dark:border-gray-600">
+                <div class="flex justify-end p-6 space-x-2 rounded-b border-t border-gray-600">
                     <button data-modal-toggle="report-modal" type="button" id="report_episode_btn"
-                        class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Gửi</button>
+                        class="text-white bg-red-600 hover:bg-red-600/80 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 focus:z-10">Gửi</button>
                 </div>
             </div>
         </div>
@@ -180,13 +186,12 @@
                 '</a>';
         })->implode(', ') !!}</div>
 
-    <div class="fb-comments w-full rounded-lg bg-white" data-href="{{ $episode->getUrl() }}" data-width="100%"
+    <div class="fb-comments w-full rounded-lg bg-white" data-href="{{ $movie->getUrl() }}" data-width="100%"
         data-numposts="5" data-colorscheme="dark" data-lazy="true">
     </div>
-
 @endsection
 
-@section("footer")
+@section('footer')
     @parent
     <script src="/js/jwplayer-8.9.3.js"></script>
     <script src="/js/hls.min.js"></script>
