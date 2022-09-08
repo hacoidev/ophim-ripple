@@ -14,6 +14,10 @@ class RippleServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->loadViewsFrom(__DIR__ . '/../resources/views/', 'themes');
+
+        $this->publishes([
+            __DIR__ . '/../resources/assets' => public_path('themes/ripple')
+        ], 'ripple-assets');
     }
 
     protected function setupDefaultThemeCustomizer()
