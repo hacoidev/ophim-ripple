@@ -43,6 +43,7 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
     }
     return $data;
 });
+
 @endphp
 
 @section('content')
