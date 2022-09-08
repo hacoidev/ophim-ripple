@@ -121,5 +121,5 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
         </div>
     @endif
 
-    {{ $data->appends(request()->all())->links() }}
+    {{ $data->appends(request()->all())->links("themes::ripple.inc.pagination") }}
 @endsection
