@@ -1,25 +1,63 @@
 @extends('themes::ripple.layout')
 
 @section('content')
-    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
-        itemtype="https://schema.org/BreadcrumbList">
-        <a href="/">
-            <span class="text-white" itemprop="name">Trang Chủ ></span>
-        </a>
-        @foreach ($movie->regions as $region)
-            <a href="{{ $region->getUrl() }}">
-                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $region->name }} ></span>
+    <ul class="breadcrumb w-full px-2 py-2 mb-3 bg-[#151111] rounded-lg text-white">
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+            itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="/" title="Xem phim">
+                <span itemprop="name">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4 inline">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    Xem phim »
+                </span>
             </a>
+            <meta itemprop="position" content="1">
+        </li>
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+            itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="/danh-sach/{{ $movie->type == 'single' ? 'phim-le' : 'phim-bo' }}"
+                title="{{ $movie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }}">
+                <span itemprop="name">
+                    {{ $movie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }} »
+                </span>
+            </a>
+            <meta itemprop="position" content="2">
+        </li>
+        @foreach ($movie->regions as $region)
+            <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+                itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{ $region->getUrl() }}" title="{{ $region->name }}">
+                    <span itemprop="name">
+                        {{ $region->name }} »
+                    </span>
+                </a>
+                <meta itemprop="position" content="3">
+            </li>
         @endforeach
         @foreach ($movie->categories as $category)
-            <a href="{{ $category->getUrl() }}">
-                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $category->name }} ></span>
-            </a>
+            <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+                itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{ $category->getUrl() }}" title="{{ $category->name }}">
+                    <span itemprop="name">
+                        {{ $category->name }} »
+                    </span>
+                </a>
+                <meta itemprop="position" content="3">
+            </li>
         @endforeach
-        <a href="{{ $movie->getUrl() }}">
-            <span class="text-gray-400 italic whitespace-normal">{{ $movie->name }}</span>
-        </a>
-    </div>
+        <li class="inline text-gray-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{ $movie->getUrl() }}" title="{{ $movie->name }}">
+                <span itemprop="name">
+                    {{ $movie->name }}
+                </span>
+            </a>
+            <meta itemprop="position" content="4">
+        </li>
+    </ul>
+
     @if ($movie->showtimes && $movie->showtimes != '')
         <div class="mt-2.5 p-2 bg-[#1511116d] mb-1 rounded-lg text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
@@ -72,7 +110,7 @@
                         @endif
 
                         @if (!$movie->trailer_url && count($movie->episodes) && $movie->episodes[0]['link'] == '')
-                         <div class="text-white">Đang cập nhật...</div>
+                            <div class="text-white">Đang cập nhật...</div>
                         @endif
 
                     </div>
@@ -84,7 +122,8 @@
             <input type="checkbox" id="trailer-modal" class="modal-toggle" />
             <div class="modal">
                 <div class="modal-box relative bg-black/60">
-                    <label for="trailer-modal" class="btn btn-sm btn-circle bg-red-600 text-white absolute right-2 top-2">✕</label>
+                    <label for="trailer-modal"
+                        class="btn btn-sm btn-circle bg-red-600 text-white absolute right-2 top-2">✕</label>
                     @php
                         parse_str(parse_url($movie->trailer_url, PHP_URL_QUERY), $parse_url);
                         $trailer_url = $parse_url['v'];
@@ -121,8 +160,8 @@
                                         </path>
                                     </svg>
                                 @else
-                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-300"
-                                        fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                    <svg aria-hidden="true" class="w-5 h-5 text-gray-300" fill="currentColor"
+                                        viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <title>dark star</title>
                                         <path
                                             d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">

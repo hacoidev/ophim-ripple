@@ -10,16 +10,30 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
 @endphp
 
 @section('content')
-    <div class="breadcrumb w-full px-2 py-2 mb-3 bg-[#151111] rounded-lg">
-        <a href="/">
-            <span class="text-white" itemprop="name">Trang Chủ ></span>
-        </a>
-        <a href="{{ url()->current() }}">
-            <span class="text-gray-400 italic whitespace-normal truncate">
-                {{ $section_name ?? "Danh Sách Phim" }}
-            </span>
-        </a>
-    </div>
+    <ul class="breadcrumb w-full px-2 py-2 mb-3 bg-[#151111] rounded-lg text-white">
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+            itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="/" title="Xem phim">
+                <span itemprop="name">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4 inline">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    Xem phim »
+                </span>
+            </a>
+            <meta itemprop="position" content="1">
+        </li>
+        <li class="inline text-gray-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{ url()->current() }}" title="{{ $section_name ?? 'Danh Sách Phim' }}">
+                <span itemprop="name">
+                    {{ $section_name ?? 'Danh Sách Phim' }}
+                </span>
+            </a>
+            <meta itemprop="position" content="2">
+        </li>
+    </ul>
     <div class="text-[#ddd] mb-3">
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mb-3">
             <div class="block-search">
@@ -91,7 +105,7 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
     <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-2">
         <h2 class="inline p-1.5 bg-[red] rounded-l-lg">
             <span class="h-text text-white">
-                {{ $section_name ?? "Danh Sách Phim" }}
+                {{ $section_name ?? 'Danh Sách Phim' }}
             </span>
         </h2>
     </div>

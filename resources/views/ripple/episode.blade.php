@@ -1,25 +1,70 @@
 @extends('themes::ripple.layout')
 
 @section('content')
-    <div class="breadcrumb w-full py-[5px] px-[10px] mb-2 list-none bg-[#151111] rounded" itemscope=""
-        itemtype="https://schema.org/BreadcrumbList">
-        <a href="/">
-            <span class="text-white hover:text-yellow-400" itemprop="name">Trang Chủ ></span>
-        </a>
-        @foreach ($movie->regions as $region)
-            <a href="{{ $region->getUrl() }}">
-                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $region->name }} ></span>
+    <ul class="breadcrumb w-full px-2 py-2 mb-3 bg-[#151111] rounded-lg text-white">
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+            itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="/" title="Xem phim">
+                <span itemprop="name">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-4 h-4 inline">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+                    </svg>
+                    Xem phim »
+                </span>
             </a>
+            <meta itemprop="position" content="1">
+        </li>
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+            itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="/danh-sach/{{ $movie->type == 'single' ? 'phim-le' : 'phim-bo' }}"
+                title="{{ $movie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }}">
+                <span itemprop="name">
+                    {{ $movie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }} »
+                </span>
+            </a>
+            <meta itemprop="position" content="2">
+        </li>
+        @foreach ($movie->regions as $region)
+            <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+                itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{ $region->getUrl() }}" title="{{ $region->name }}">
+                    <span itemprop="name">
+                        {{ $region->name }} »
+                    </span>
+                </a>
+                <meta itemprop="position" content="3">
+            </li>
         @endforeach
         @foreach ($movie->categories as $category)
-            <a href="{{ $category->getUrl() }}">
-                <span class="text-white hover:text-yellow-400" itemprop="name">{{ $category->name }} ></span>
-            </a>
+            <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+                itemtype="http://schema.org/ListItem">
+                <a itemprop="item" href="{{ $category->getUrl() }}" title="{{ $category->name }}">
+                    <span itemprop="name">
+                        {{ $category->name }} »
+                    </span>
+                </a>
+                <meta itemprop="position" content="3">
+            </li>
         @endforeach
-        <a href="{{ $movie->getUrl() }}">
-            <span class="text-gray-400 italic whitespace-normal truncate">{{ $movie->name }}</span>
-        </a>
-    </div>
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{ $movie->getUrl() }}" title="{{ $movie->name }}">
+                <span itemprop="name">
+                    {{ $movie->name }} »
+                </span>
+            </a>
+            <meta itemprop="position" content="4">
+        </li>
+        <li class="inline text-gray-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+            <a itemprop="item" href="{{ url()->current() }}" title="Xem phim">
+                <span itemprop="name">
+                    Xem phim
+                </span>
+            </a>
+            <meta itemprop="position" content="5">
+        </li>
+    </ul>
 
     <div class="flex rounded-lg p-0 md:p-2 text-[#bbb] bg-[#1511116d] mb-2">
         <div class="w-[120px] md:w-[145px] pr-0">
@@ -33,8 +78,7 @@
             <h1>
                 <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
                     <a href="{{ URL::current() }}"
-                        title="{{ $movie->name }} - Tập {{ $movie->episodes[0]['name'] }}">{{ $movie->name }} - Tập
-                        {{ $movie->episodes[0]['name'] }}</a>
+                        title="Xem phim {{ $movie->name }}">Xem phim {{ $movie->name }}</a>
                 </span>
             </h1>
 
@@ -85,7 +129,8 @@
             data-modal-toggle="report-modal">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
                 stroke="currentColor" aria-hidden="true" class="w-5 h-5 inline">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
                 </path>
             </svg><span class="hidden md:inline">Báo Lỗi</span>
         </div>
