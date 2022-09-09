@@ -27,6 +27,7 @@ class RippleServiceProvider extends ServiceProvider
                 'name' => 'Ripple',
                 'author' => 'hacoi.dev@gmail.com',
                 'package_name' => 'hacoidev/ophim-ripple',
+                'publishes' => ['ripple-assets'],
                 'preview_image' => '',
                 'options' => [
                     [
