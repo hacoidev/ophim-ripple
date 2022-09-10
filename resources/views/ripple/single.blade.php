@@ -107,12 +107,9 @@
                                 </svg>
                                 Xem phim
                             </a>
-                        @endif
-
-                        @if (!$movie->trailer_url && count($movie->episodes) && $movie->episodes[0]['link'] == '')
+                        @else
                             <div class="text-white">Đang cập nhật...</div>
                         @endif
-
                     </div>
                 </div>
             </div>
@@ -285,5 +282,17 @@
 
     <div class="fb-comments w-full rounded-lg bg-white" data-href="{{ $movie->getUrl() }}" data-width="100%"
         data-numposts="5" data-colorscheme="light" data-lazy="true">
+    </div>
+
+
+    <div class="mt-2.5 p-3 bg-[#1511116d] mb-3 rounded-lg">
+        <h3 class="text-sm font-bold text-[#dacb46] uppercase mt-1.5 mb-3">
+            Có thể bản muốn xem
+        </h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
+            @foreach ($movie_related ?? [] as $movie)
+                @include('themes::ripple.inc.movie_card')
+            @endforeach
+        </div>
     </div>
 @endsection

@@ -12,6 +12,8 @@ use Ophim\Core\Models\Movie;
 use Ophim\Core\Models\Region;
 use Ophim\Core\Models\Tag;
 
+use Illuminate\Support\Facades\Cache;
+
 class RippleController
 {
     public function index(Request $request)
@@ -69,9 +71,17 @@ class RippleController
 
         $movie->generateSeoTags();
 
+        $movie_related_cache_key = 'movie_related.' . $movie->id;
+        $movie_related = Cache::get($movie_related_cache_key);
+        if(is_null($movie_related)) {
+            $movie_related = $movie->categories[0]->movies()->inRandomOrder()->limit(10)->get();
+            Cache::put($movie_related_cache_key, $movie_related, setting('site_cache_ttl', 5 * 60));
+        }
+
         return view('themes::ripple.single', [
             'movie' => $movie,
-            'title' => $movie->getTitle()
+            'title' => $movie->getTitle(),
+            'movie_related' => $movie_related
         ]);
     }
 
@@ -95,8 +105,16 @@ class RippleController
         $movie->increment('view_week', 1);
         $movie->increment('view_month', 1);
 
+        $movie_related_cache_key = 'movie_related.' . $movie->id;
+        $movie_related = Cache::get($movie_related_cache_key);
+        if(is_null($movie_related)) {
+            $movie_related = $movie->categories[0]->movies()->inRandomOrder()->limit(10)->get();
+            Cache::put($movie_related_cache_key, $movie_related, setting('site_cache_ttl', 5 * 60));
+        }
+
         return view('themes::ripple.episode', [
             'movie' => $movie,
+            'movie_related' => $movie_related,
             'episode' => $episode,
             'title' => $episode->getTitle()
         ]);

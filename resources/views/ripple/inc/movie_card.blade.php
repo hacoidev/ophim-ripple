@@ -18,7 +18,9 @@
     @elseif ($movie->type == 'series' && $movie->status == 'completed')
         <div class="absolute top-[7%] -left-[34%] text-white uppercase py-[2px] px-0 text-[9px] w-full text-center -rotate-45 bg-gradient-to-r from-pink-500 to-yellow-500">Trọn Bộ</div>
     @endif
-
+    @if ($movie->status == 'trailer')
+        <div class="absolute top-[7%] -left-[34%] text-white uppercase py-[2px] px-0 text-[9px] w-full text-center -rotate-45 bg-gradient-to-r from-indigo-500">Sắp chiếu</div>
+    @endif
     @if ($movie->is_recommended)
         <div class="absolute top-0.5 right-0.5 p-0.5 bg-red-600 text-white rounded-full">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
