@@ -323,6 +323,7 @@
             })
             el.classList.add('bg-red-600')
 
+            link = link.replace('http://', 'https://');
             renderPlayer(type, link, id);
         }
 
