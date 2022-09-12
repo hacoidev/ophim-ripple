@@ -231,7 +231,7 @@
                 '</a>';
         })->implode(', ') !!}</div>
 
-    <div class="fb-comments w-full rounded-lg bg-white" data-href="{{ $movie->getUrl() }}" data-width="100%"
+    <div class="fb-comments w-full rounded-lg bg-white mt-2.5" data-href="{{ $movie->getUrl() }}" data-width="100%"
         data-numposts="5" data-colorscheme="dark" data-lazy="true">
     </div>
 
@@ -456,3 +456,7 @@
         })
     </script>
 @endsection
+
+@push('scripts')
+    {!! setting('site_scripts_facebook_sdk') !!}
+@endpush

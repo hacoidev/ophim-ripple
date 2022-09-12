@@ -115,4 +115,6 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
     integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/flowbite@1.4.7/dist/flowbite.js"></script>
+
+    {!! setting('site_scripts_google_analytics') !!}
 @endsection

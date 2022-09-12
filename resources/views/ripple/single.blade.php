@@ -299,3 +299,7 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    {!! setting('site_scripts_facebook_sdk') !!}
+@endpush
