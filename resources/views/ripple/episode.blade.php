@@ -78,7 +78,7 @@
             <h1>
                 <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
                     <a href="{{ URL::current() }}"
-                        title="Xem phim {{ $movie->name }}">Xem phim {{ $movie->name }}</a>
+                        title="Xem phim {{ $movie->name }} - Tập {{ $episode->name }}">Xem phim {{ $movie->name }} - Tập {{ $episode->name }}</a>
                 </span>
             </h1>
 
