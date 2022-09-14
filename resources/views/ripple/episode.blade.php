@@ -269,6 +269,7 @@
             ],
             starOff: '/themes/ripple/js/plugins/jquery-raty/images/star-off.png',
             starOn: '/themes/ripple/js/plugins/jquery-raty/images/star-on.png',
+            starHalf: '/themes/ripple/js/plugins/jquery-raty/images/star-half.png',
             click: function(score, evt) {
                 if (rated) return
                 fetch("{{ route('movie.rating', ['movie' => $movie->slug, 'episode' => $episode->slug]) }}", {
