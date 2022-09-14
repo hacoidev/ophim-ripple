@@ -256,7 +256,7 @@
 
     {{-- Star Rating Plugins --}}
     <script src="/themes/ripple/js/plugins/jquery-raty/jquery.raty.js"></script>
-    <script src="/themes/ripple/js/plugins/jquery-raty/jquery.raty.css"></script>
+    <link href="/themes/ripple/js/plugins/jquery-raty/jquery.raty.css" rel="stylesheet" type="text/css" />
 
     <script>
         var rated = false;
