@@ -79,7 +79,7 @@ class RippleController
         }
 
         return view('themes::ripple.single', [
-            'movie' => $movie,
+            'currentMovie' => $movie,
             'title' => $movie->getTitle(),
             'movie_related' => $movie_related
         ]);
@@ -113,7 +113,7 @@ class RippleController
         }
 
         return view('themes::ripple.episode', [
-            'movie' => $movie,
+            'currentMovie' => $movie,
             'movie_related' => $movie_related,
             'episode' => $episode,
             'title' => $episode->getTitle()

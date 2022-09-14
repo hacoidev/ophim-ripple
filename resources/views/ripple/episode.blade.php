@@ -18,15 +18,15 @@
         </li>
         <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
             itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="/danh-sach/{{ $movie->type == 'single' ? 'phim-le' : 'phim-bo' }}"
-                title="{{ $movie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }}">
+            <a itemprop="item" href="/danh-sach/{{ $currentMovie->type == 'single' ? 'phim-le' : 'phim-bo' }}"
+                title="{{ $currentMovie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }}">
                 <span itemprop="name">
-                    {{ $movie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }} »
+                    {{ $currentMovie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }} »
                 </span>
             </a>
             <meta itemprop="position" content="2">
         </li>
-        @foreach ($movie->regions as $region)
+        @foreach ($currentMovie->regions as $region)
             <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
                 itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="{{ $region->getUrl() }}" title="{{ $region->name }}">
@@ -37,7 +37,7 @@
                 <meta itemprop="position" content="3">
             </li>
         @endforeach
-        @foreach ($movie->categories as $category)
+        @foreach ($currentMovie->categories as $category)
             <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
                 itemtype="http://schema.org/ListItem">
                 <a itemprop="item" href="{{ $category->getUrl() }}" title="{{ $category->name }}">
@@ -49,9 +49,9 @@
             </li>
         @endforeach
         <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="{{ $movie->getUrl() }}" title="{{ $movie->name }}">
+            <a itemprop="item" href="{{ $currentMovie->getUrl() }}" title="{{ $currentMovie->name }}">
                 <span itemprop="name">
-                    {{ $movie->name }} »
+                    {{ $currentMovie->name }} »
                 </span>
             </a>
             <meta itemprop="position" content="4">
@@ -69,7 +69,7 @@
     <div class="flex rounded-lg p-0 md:p-2 text-[#bbb] bg-[#1511116d] mb-2">
         <div class="w-[120px] md:w-[145px] pr-0">
             <div class="rounded-md w-full h-[fit-content] p-2">
-                <img class="w-full cursor-pointer rounded-md" style="aspect-ratio: 256/340" src="{{ $movie->thumb_url }}"
+                <img class="w-full cursor-pointer rounded-md" style="aspect-ratio: 256/340" src="{{ $currentMovie->thumb_url }}"
                     alt="" />
             </div>
         </div>
@@ -78,19 +78,19 @@
             <h1>
                 <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
                     <a href="{{ URL::current() }}"
-                        title="Xem phim {{ $movie->name }} - Tập {{ $episode->name }}">Xem phim {{ $movie->name }} - Tập {{ $episode->name }}</a>
+                        title="Xem phim {{ $currentMovie->name }} - Tập {{ $episode->name }}">Xem phim {{ $currentMovie->name }} - Tập {{ $episode->name }}</a>
                 </span>
             </h1>
 
             <h2>
-                <span class="text-gray-300 text-base">{{ $movie->origin_name ?? '' }}</span>
-                <span class="text-gray-300 text-base"> ({{ $movie->publish_year ?? 'Đang cập nhật...' }})</span>
+                <span class="text-gray-300 text-base">{{ $currentMovie->origin_name ?? '' }}</span>
+                <span class="text-gray-300 text-base"> ({{ $currentMovie->publish_year ?? 'Đang cập nhật...' }})</span>
             </h2>
 
             <article
                 class="w-auto h-[56px] md:h-[96px] overflow-y-auto rounded-lg text-[#bbb] bg-[#272727] bg-opacity-50 p-1 mt-1">
-                @if ($movie->content)
-                    <div class="whitespace-pre-wrap">{!! $movie->content !!}</div>
+                @if ($currentMovie->content)
+                    <div class="whitespace-pre-wrap">{!! $currentMovie->content !!}</div>
                 @else
                     <p>Đang cập nhật ...</p>
                 @endif
@@ -98,24 +98,24 @@
         </div>
     </div>
 
-    @if ($movie->showtimes && $movie->showtimes != '')
+    @if ($currentMovie->showtimes && $currentMovie->showtimes != '')
         <div class="mt-2.5 p-2 bg-[#1511116d] mb-1 rounded-lg text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6 inline animate-pulse">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
             </svg>
-            Lịch chiếu: <span class="text-yellow-500">{!! $movie->showtimes !!}</span>
+            Lịch chiếu: <span class="text-yellow-500">{!! $currentMovie->showtimes !!}</span>
         </div>
     @endif
-    @if ($movie->notify && $movie->notify != '')
+    @if ($currentMovie->notify && $currentMovie->notify != '')
         <div class="mt-2.5 p-2 bg-[#1511116d] mb-2 rounded-lg text-gray-300">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6 inline animate-pulse">
                 <path stroke-linecap="round" stroke-linejoin="round"
                     d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0M3.124 7.5A8.969 8.969 0 015.292 3m13.416 0a8.969 8.969 0 012.168 4.5" />
             </svg>
-            Thông báo: <span class="text-red-500">{{ strip_tags($movie->notify) }}</span>
+            Thông báo: <span class="text-red-500">{{ strip_tags($currentMovie->notify) }}</span>
         </div>
     @endif
 
@@ -145,7 +145,7 @@
                     <div class="text-xl font-medium text-red-600">
                         Báo lỗi phim
                         <p class="text-yellow-500">
-                            {{ $movie->name }}
+                            {{ $currentMovie->name }}
                         </p>
                     </div>
                     <button type="button"
@@ -175,7 +175,7 @@
         </div>
     </div>
     <div class="flex flex-wrap justify-center gap-1 py-3 text-white" id="stream-servers">
-        @foreach ($movie->episodes->where('slug', $episode->slug)->where('server', $episode->server) as $server)
+        @foreach ($currentMovie->episodes->where('slug', $episode->slug)->where('server', $episode->server) as $server)
             <a onclick="chooseStreamingServer(this)" data-type="{{ $server->type }}" data-id="{{ $server->id }}"
                 data-link="{{ $server->link }}"
                 class="streaming-server hover:cursor-pointer uppercase current bg-[#151111] hover:bg-red-600 hover:bg-opacity-80 shadow-md px-2 py-1 mr-1 rounded text-sm">Nguồn
@@ -186,15 +186,15 @@
     <div class="my-3 p-2 md:flex justify-center items-center gap-x-2 bg-[#272727] rounded-sm">
         <div id="movies-rating-star" class="flex"></div>
         <div class="text-xs text-white align-middle">
-            ({{ number_format($movie->rating_star ?? 0, 1) }}
+            ({{ number_format($currentMovie->rating_star ?? 0, 1) }}
             sao
             /
-            {{ $movie->rating_count ?? 0 }} đánh giá)
+            {{ $currentMovie->rating_count ?? 0 }} đánh giá)
         </div>
         <div id="movies-rating-msg" class="text-[#FDB813] mb-2 font-bold text-sm mt-2"></div>
     </div>
 
-    @foreach ($movie->episodes->groupBy('server') as $server => $data)
+    @foreach ($currentMovie->episodes->groupBy('server') as $server => $data)
         <div class="flex flex-col my-3 mt-6 p-2 bg-[#272727] bg-opacity-50">
             <h2 id="heading-{{ $loop->index }}">
                 <button class="flex justify-between w-full py-2 font-medium text-left text-slate-200 rounded-sm"
@@ -221,7 +221,7 @@
         </div>
     @endforeach
 
-    <div class="mt-1.5">{!! $movie->tags->map(function ($tag) {
+    <div class="mt-1.5">{!! $currentMovie->tags->map(function ($tag) {
             return '<a class="bg-[#111] text-[#ccc] hover:text-white px-2 border-[#333] border-[1px]" href="' .
                 $tag->getUrl() .
                 '" title="' .
@@ -231,7 +231,7 @@
                 '</a>';
         })->implode(', ') !!}</div>
 
-    <div class="fb-comments w-full rounded-lg bg-white mt-2.5" data-href="{{ $movie->getUrl() }}" data-width="100%"
+    <div class="fb-comments w-full rounded-lg bg-white mt-2.5" data-href="{{ $currentMovie->getUrl() }}" data-width="100%"
         data-numposts="5" data-colorscheme="dark" data-lazy="true">
     </div>
 
@@ -261,7 +261,7 @@
     <script>
         var rated = false;
         $('#movies-rating-star').raty({
-            score: {{ number_format($movie->rating_star ?? 0, 1) }},
+            score: {{ number_format($currentMovie->rating_star ?? 0, 1) }},
             number: 10,
             numberMax: 10,
             hints: ['quá tệ', 'tệ', 'không hay', 'không hay lắm', 'bình thường', 'xem được', 'có vẻ hay', 'hay',
@@ -272,7 +272,7 @@
             starHalf: '/themes/ripple/js/plugins/jquery-raty/images/star-half.png',
             click: function(score, evt) {
                 if (rated) return
-                fetch("{{ route('movie.rating', ['movie' => $movie->slug, 'episode' => $episode->slug]) }}", {
+                fetch("{{ route('movie.rating', ['movie' => $currentMovie->slug, 'episode' => $episode->slug]) }}", {
                     method: 'POST',
                     headers: {
                         "Content-Type": "application/json",
