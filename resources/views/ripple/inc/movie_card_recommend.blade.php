@@ -1,4 +1,4 @@
-<a href="{{ $movie->getUrl() }}" class="rounded-md overflow-hidden relative group" title="{{ $movie->name ?? '' }}">
+<a href="{{ $movie->getUrl() }}" class="block rounded-md overflow-hidden relative group" title="{{ $movie->name ?? '' }}">
     <img class="rounded-md group-hover:opacity-60 transition-all duration-500 transform group-hover:bg-opacity-60"
         style="aspect-ratio: 16/9" src="{{ $movie->poster_url }}" alt="{{ $movie->name ?? '' }}" />
 
