@@ -102,7 +102,7 @@
                         @if ($currentMovie->status != 'trailer' && count($currentMovie->episodes) && $currentMovie->episodes[0]['link'] != '')
                             <a class="bg-red-600 hover:bg-opacity-80 text-gray-50 inline-block px-2 py-1 rounded"
                                 title="{{ $currentMovie->name }} - {{ $currentMovie->origin_name }} ({{ $currentMovie->publish_year }})"
-                                href="{{ $currentMovie->episodes->sortByDesc('name', SORT_NATURAL)->first()->getUrl() }}">
+                                href="{{ $currentMovie->episodes->sortBy([['server', 'asc']])->groupBy('server')->first()->sortByDesc('name', SORT_NATURAL)->groupBy('name')->last()->sortByDesc('type')->first()->getUrl() }}">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-4 h-4 inline">
                                     <path stroke-linecap="round" stroke-linejoin="round"

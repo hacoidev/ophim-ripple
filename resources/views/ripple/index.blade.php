@@ -5,7 +5,7 @@ use Ophim\Core\Models\Movie;
 
 $recommendations = Cache::remember('site.movies.recommendations', setting('site_cache_ttl', 5 * 60), function () {
     return Movie::where('is_recommended', true)
-        ->limit(setting('site.movies.recommendations.limit', 5))
+        ->limit(setting('site.movies.recommendations.limit', 10))
         ->get()
         ->sortBy([
             function ($a, $b) {

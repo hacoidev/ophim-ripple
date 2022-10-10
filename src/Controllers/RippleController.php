@@ -156,7 +156,7 @@ class RippleController
 
         $category->generateSeoTags();
 
-        $movies = $category->movies()->paginate(20);
+        $movies = $category->movies()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('themes::ripple.catalog', [
             'data' => $movies,
@@ -175,7 +175,7 @@ class RippleController
 
         $region->generateSeoTags();
 
-        $movies = $region->movies()->paginate(20);
+        $movies = $region->movies()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('themes::ripple.catalog', [
             'data' => $movies,
@@ -194,7 +194,7 @@ class RippleController
 
         $actor->generateSeoTags();
 
-        $movies = $actor->movies()->paginate(20);
+        $movies = $actor->movies()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('themes::ripple.catalog', [
             'data' => $movies,
@@ -213,7 +213,7 @@ class RippleController
 
         $director->generateSeoTags();
 
-        $movies = $director->movies()->paginate(20);
+        $movies = $director->movies()->orderBy('created_at', 'desc')->paginate(20);
 
         return view('themes::ripple.catalog', [
             'data' => $movies,
@@ -232,7 +232,7 @@ class RippleController
 
         $tag->generateSeoTags();
 
-        $movies = $tag->movies()->paginate(20);
+        $movies = $tag->movies()->orderBy('created_at', 'desc')->paginate(20);
         return view('themes::ripple.catalog', [
             'data' => $movies,
             'tag' => $tag,
@@ -246,20 +246,20 @@ class RippleController
         switch ($slug) {
             case 'phim-de-cu':
                 $section_name = 'Phim Hot Đề Cử';
-                $movies = Movie::where('is_recommended', 1)->paginate(36);
+                $movies = Movie::where('is_recommended', 1)->orderBy('created_at', 'desc')->paginate(36);
                 break;
             case 'phim-chieu-rap':
                 $section_name = 'Phim Chiếu Rạp';
-                $movies = Movie::where('is_shown_in_theater', 1)->paginate(36);
+                $movies = Movie::where('is_shown_in_theater', 1)->orderBy('created_at', 'desc')->paginate(36);
                 break;
             case 'phim-sap-chieu':
                 $section_name = 'Phim Sắp Chiếu';
-                $movies = Movie::where('status', 'trailer')->paginate(36);
+                $movies = Movie::where('status', 'trailer')->orderBy('created_at', 'desc')->paginate(36);
                 break;
             default:
                 $type = $slug == 'phim-le' ? 'single' : 'series';
                 $section_name = $slug == 'phim-le' ? 'Phim Lẻ' : 'Phim Bộ';
-                $movies = Movie::where('type', $type)->paginate(36);
+                $movies = Movie::where('type', $type)->orderBy('created_at', 'desc')->paginate(36);
                 break;
         }
 
