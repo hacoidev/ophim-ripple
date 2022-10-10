@@ -35,7 +35,7 @@ class RippleController
                 $query->where(function ($query) {
                     $query->where('name', 'like', '%' . request('search') . '%')
                         ->orWhere('origin_name', 'like', '%' . request('search')  . '%');
-                });
+                })->orderBy('name', 'desc');
             })->when(!empty($request['filter']['sort']), function ($movie) {
                 if (request('filter')['sort'] == 'create') {
                     return $movie->orderBy('created_at', 'desc');
