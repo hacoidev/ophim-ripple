@@ -11,6 +11,7 @@ https://github.com/hacoidev/ophim-core
 
 ## Update
 1. Tại thư mục của Project: `composer update hacoidev/ophim-ripple`
+2. Re-Active giao diện trong Admin Panel
 
 ## Document
 ### List

@@ -302,6 +302,7 @@
 
     <script>
         const wrapper = document.getElementById('player-wrapper');
+        const vastAds = "{{ Setting::get('jwplayer_advertising_file') }}";
 
         function chooseStreamingServer(el) {
             const type = el.dataset.type;
@@ -330,9 +331,50 @@
 
         function renderPlayer(type, link, id) {
             if (type == 'embed') {
-                if (wrapper) {
-                    wrapper.innerHTML = `<iframe width="100%" height="100%" src="${link}" frameborder="0" scrolling="no"
-                            allowfullscreen=""></iframe>;`
+                if (vastAds) {
+                    wrapper.innerHTML = `<div id="fake_jwplayer"></div>`;
+                    const fake_player = jwplayer("fake_jwplayer");
+                    const objSetupFake = {
+                        key: "{{ Setting::get('jwplayer_license') }}",
+                        aspectratio: "16:9",
+                        width: "100%",
+                        file: "/themes/ripple/player/1s_blank.mp4",
+                        volume: 100,
+                        mute: false,
+                        autostart: true,
+                        advertising: {
+                            tag: "{{ Setting::get('jwplayer_advertising_file') }}",
+                            client: "vast",
+                            vpaidmode: "insecure",
+                            skipoffset: {{ (int) Setting::get('jwplayer_advertising_skipoffset') ?: 5 }}, // Bỏ qua quảng cáo trong vòng 5 giây
+                            skipmessage: "Bỏ qua sau xx giây",
+                            skiptext: "Bỏ qua"
+                        }
+                    };
+                    fake_player.setup(objSetupFake);
+                    fake_player.on('complete', function(event) {
+                        $("#fake_jwplayer").remove();
+                        wrapper.innerHTML = `<iframe width="100%" height="100%" src="${link}" frameborder="0" scrolling="no"
+                        allowfullscreen="" allow='autoplay'></iframe>`
+                        fake_player.remove();
+                    });
+                    fake_player.on('adSkipped', function(event) {
+                        $("#fake_jwplayer").remove();
+                        wrapper.innerHTML = `<iframe width="100%" height="100%" src="${link}" frameborder="0" scrolling="no"
+                        allowfullscreen="" allow='autoplay'></iframe>`
+                        fake_player.remove();
+                    });
+                    fake_player.on('adComplete', function(event) {
+                        $("#fake_jwplayer").remove();
+                        wrapper.innerHTML = `<iframe width="100%" height="100%" src="${link}" frameborder="0" scrolling="no"
+                        allowfullscreen="" allow='autoplay'></iframe>`
+                        fake_player.remove();
+                    });
+                } else {
+                    if (wrapper) {
+                        wrapper.innerHTML = `<iframe width="100%" height="100%" src="${link}" frameborder="0" scrolling="no"
+                        allowfullscreen="" allow='autoplay'></iframe>`
+                    }
                 }
                 return;
             }
