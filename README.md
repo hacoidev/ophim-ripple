@@ -2,6 +2,19 @@
 
 ## Demo
 
+### Trang Chủ
+![Alt text](https://i.ibb.co/M2SMFwf/RIPPLE-INDEX.png "Home Page")
+
+### Trang Danh Sách Phim
+![Alt text](https://i.ibb.co/6JwS6hy/RIPPLE-CATALOG.png "Catalog Page")
+
+### Trang Thông Tin Phim
+![Alt text](https://i.ibb.co/2h0FjyQ/RIPPLE-SINGLE.png "Single Page")
+
+### Trang Xem Phim
+![Alt text](https://i.ibb.co/dD00qPG/RIPPLE-EPISODE.png "Episode Page")
+
+
 ## Requirements
 https://github.com/hacoidev/ophim-core
 
@@ -11,7 +24,12 @@ https://github.com/hacoidev/ophim-core
 
 ## Update
 1. Tại thư mục của Project: `composer update hacoidev/ophim-ripple`
-2. Re-Active giao diện trong Admin Panel
+2. Re-Activate giao diện trong Admin Panel
+
+## Note
+- Một vài lưu ý quan trọng của các nút chức năng:
+    + `Activate` và `Re-Activate` sẽ publish toàn bộ file js,css trong themes ra ngoài public của laravel.
+    + `Reset` reset lại toàn bộ cấu hình của themes
 
 ## Document
 ### List

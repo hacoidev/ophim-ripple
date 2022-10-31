@@ -85,15 +85,15 @@ class RippleController
         ]);
     }
 
-    public function getEpisode(Request $request, $movie, $slug)
+    public function getEpisode(Request $request, $movie, $slug, $id)
     {
         $movie = Movie::fromCache()->find($movie)->load('episodes');
 
         if (is_null($movie)) abort(404);
 
         /** @var Episode */
-        $episode = $movie->episodes->when(request('id'), function ($collection) {
-            return $collection->where('id', request('id'));
+        $episode = $movie->episodes->when($id, function ($collection, $id) {
+            return $collection->where('id', $id);
         })->firstWhere('slug', $slug);
 
         if (is_null($episode)) abort(404);
@@ -120,12 +120,12 @@ class RippleController
         ]);
     }
 
-    public function reportEpisode(Request $request, $movie, $slug)
+    public function reportEpisode(Request $request, $movie, $slug, $id)
     {
         $movie = Movie::fromCache()->find($movie)->load('episodes');
 
-        $episode = $movie->episodes->when(request('id'), function ($collection) {
-            return $collection->where('id', request('id'));
+        $episode = $movie->episodes->when($id, function ($collection, $id) {
+            return $collection->where('id', $id);
         })->firstWhere('slug', $slug);
 
         $episode->update([

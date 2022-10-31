@@ -35,7 +35,7 @@ class RippleServiceProvider extends ServiceProvider
                         'label' => 'Danh sách mới cập nhật',
                         'type' => 'code',
                         'hint' => 'display_label|relation|find_by_field|value|limit|show_more_url',
-                        'value' => 'Phim bộ mới||type|series|10|/danh-sach/phim-bo',
+                        'value' => "Phim chiếu rạp||is_shown_in_theater|1|10|/danh-sach/phim-chieu-rap\r\nPhim bộ mới||type|series|10|/danh-sach/phim-bo\r\nPhim lẻ mới||type|single|10|/danh-sach/phim-le",
                         'attributes' => [
                             'rows' => 5
                         ],
@@ -46,7 +46,7 @@ class RippleServiceProvider extends ServiceProvider
                         'label' => 'Danh sách hot',
                         'type' => 'code',
                         'hint' => 'Label|relation|find_by_field|value|sort_by_field|sort_algo|limit',
-                        'value' => 'Top phim bộ||type|series|view_total|desc|4',
+                        'value' => "Top sắp chiếu||status|trailer|publish_year|desc|4\r\nTop phim bộ||type|series|view_total|desc|4\r\nTop phim lẻ||type|single|view_total|desc|4",
                         'attributes' => [
                             'rows' => 5
                         ],

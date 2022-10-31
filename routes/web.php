@@ -22,7 +22,9 @@ Route::group([
     Route::get(sprintf('/%s/{region}', config('ophim.routes.region', 'quoc-gia')), [RippleController::class, 'getMovieOfRegion'])->name('regions.movies.index');
     Route::get(sprintf('/%s/{type}', config('ophim.routes.types', 'danh-sach')), [RippleController::class, 'getMovieOfType'])->name('types.movies.index');
     Route::get(sprintf('/%s/{movie}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'getMovieOverview'])->name('movies.show');
-    Route::get(sprintf('/%s/{movie}/{episode}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'getEpisode'])->name('episodes.show');
-    Route::post(sprintf('/%s/{movie}/{episode}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'reportEpisode'])->name('episodes.report');
+    Route::get(sprintf('/%s/{movie}/{episode}-{id}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'getEpisode'])
+        ->where(['movie' => '.+', 'episode' => '.+', 'id' => '[0-9]+'])->name('episodes.show');
+    Route::post(sprintf('/%s/{movie}/{episode}-{id}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'reportEpisode'])
+        ->where(['movie' => '.+', 'episode' => '.+', 'id' => '[0-9]+'])->name('episodes.report');
     Route::post(sprintf('/%s/{movie}/{episode}/rate', config('ophim.routes.movie', 'phim')), [RippleController::class, 'rateMovie'])->name('movie.rating');
 });
