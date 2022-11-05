@@ -72,10 +72,15 @@ class RippleController
 
         $movie->generateSeoTags();
 
+        $movie->increment('view_total', 1);
+        $movie->increment('view_day', 1);
+        $movie->increment('view_week', 1);
+        $movie->increment('view_month', 1);
+
         $movie_related_cache_key = 'movie_related.' . $movie->id;
         $movie_related = Cache::get($movie_related_cache_key);
         if(is_null($movie_related)) {
-            $movie_related = $movie->categories[0]->movies()->inRandomOrder()->limit(10)->get();
+            $movie_related = $movie->categories[0]->movies()->inRandomOrder()->limit(12)->get();
             Cache::put($movie_related_cache_key, $movie_related, setting('site_cache_ttl', 5 * 60));
         }
 

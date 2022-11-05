@@ -248,9 +248,6 @@
                     <dt class="inline font-bold text-sm">Ngôn ngữ:</dt>
                     <dd class="movie-dd inline ml-1 text-sm">{{ $currentMovie->language ?? 'Đang cập nhật...' }}</dd>
                     <br>
-                    <dt class="inline font-bold text-sm">Ngày cập nhật:</dt>
-                    <dd class="movie-dd inline ml-1 text-sm">{{ $currentMovie->updated_at->format('d/m/Y') }}</dd>
-                    <br>
                     <dt class="inline font-bold text-sm">Lượt xem:</dt>
                     <dd class="movie-dd inline ml-1 text-sm">
                         {{ number_format($currentMovie->view_total ?? 0) }} lượt</dd>
