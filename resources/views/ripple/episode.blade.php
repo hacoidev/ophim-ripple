@@ -16,16 +16,6 @@
             </a>
             <meta itemprop="position" content="1">
         </li>
-        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
-            itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="/danh-sach/{{ $currentMovie->type == 'single' ? 'phim-le' : 'phim-bo' }}"
-                title="{{ $currentMovie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }}">
-                <span itemprop="name">
-                    {{ $currentMovie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }} »
-                </span>
-            </a>
-            <meta itemprop="position" content="2">
-        </li>
         @foreach ($currentMovie->regions as $region)
             <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
                 itemtype="http://schema.org/ListItem">
@@ -34,7 +24,7 @@
                         {{ $region->name }} »
                     </span>
                 </a>
-                <meta itemprop="position" content="3">
+                <meta itemprop="position" content="2">
             </li>
         @endforeach
         @foreach ($currentMovie->categories as $category)
@@ -45,16 +35,17 @@
                         {{ $category->name }} »
                     </span>
                 </a>
-                <meta itemprop="position" content="3">
+                <meta itemprop="position" content="2">
             </li>
         @endforeach
-        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
+            itemtype="http://schema.org/ListItem">
             <a itemprop="item" href="{{ $currentMovie->getUrl() }}" title="{{ $currentMovie->name }}">
                 <span itemprop="name">
                     {{ $currentMovie->name }} »
                 </span>
             </a>
-            <meta itemprop="position" content="4">
+            <meta itemprop="position" content="3">
         </li>
         <li class="inline text-gray-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
             <a itemprop="item" href="{{ url()->current() }}" title="Xem phim">
@@ -69,8 +60,8 @@
     <div class="flex rounded-lg p-0 md:p-2 text-[#bbb] bg-[#1511116d] mb-2">
         <div class="w-[120px] md:w-[145px] pr-0">
             <div class="rounded-md w-full h-[fit-content] p-2">
-                <img class="w-full cursor-pointer rounded-md" style="aspect-ratio: 256/340" src="{{ $currentMovie->thumb_url }}"
-                    alt="" />
+                <img class="w-full cursor-pointer rounded-md" style="aspect-ratio: 256/340"
+                    src="{{ $currentMovie->getThumbUrl() }}" alt="" />
             </div>
         </div>
 
@@ -78,7 +69,8 @@
             <h1>
                 <span class="uppercase text-sm xl:text-xl text-[#dacb46] block font-bold">
                     <a href="{{ URL::current() }}"
-                        title="Xem phim {{ $currentMovie->name }} - Tập {{ $episode->name }}">Xem phim {{ $currentMovie->name }} - Tập {{ $episode->name }}</a>
+                        title="Xem phim {{ $currentMovie->name }} - Tập {{ $episode->name }}">Xem phim
+                        {{ $currentMovie->name }} - Tập {{ $episode->name }}</a>
                 </span>
             </h1>
 
@@ -186,10 +178,10 @@
     <div class="my-3 p-2 md:flex justify-center items-center gap-x-2 bg-[#272727] rounded-sm">
         <div id="movies-rating-star" class="flex"></div>
         <div class="text-xs text-white align-middle">
-            ({{ number_format($currentMovie->rating_star ?? 0, 1) }}
+            ({{ $currentMovie->getRatingStar() }}
             sao
             /
-            {{ $currentMovie->rating_count ?? 0 }} đánh giá)
+            {{ $currentMovie->getRatingCount() }} đánh giá)
         </div>
         <div id="movies-rating-msg" class="text-[#FDB813] mb-2 font-bold text-sm mt-2"></div>
     </div>
@@ -231,21 +223,27 @@
                 '</a>';
         })->implode(', ') !!}</div>
 
-    <div class="fb-comments w-full rounded-lg bg-white mt-2.5" data-href="{{ $currentMovie->getUrl() }}" data-width="100%"
-        data-numposts="5" data-colorscheme="dark" data-lazy="true">
+    <div style="background-color: #fff" class="mt-2">
+        <div class="fb-comments w-full rounded-lg bg-white mt-2.5"
+            data-href="{{ $currentMovie->getUrl() }}" data-width="100%" data-numposts="5" data-colorscheme="dark"
+            data-lazy="true">
+        </div>
     </div>
+
 
     <div class="mt-2.5 p-3 bg-[#1511116d] mb-3 rounded-lg">
         <h3 class="text-sm font-bold text-[#dacb46] uppercase mt-1.5 mb-3">
             Có thể bản muốn xem
         </h3>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            @foreach ($movie_related ?? [] as $movie)
+            @php
+                $key_section = 0;
+            @endphp
+            @foreach ($movie_related ?? [] as $key => $movie)
                 @include('themes::ripple.inc.movie_card')
             @endforeach
         </div>
     </div>
-
 @endsection
 
 @section('footer')
@@ -265,7 +263,7 @@
     <script>
         var rated = false;
         $('#movies-rating-star').raty({
-            score: {{ number_format($currentMovie->rating_star ?? 0, 1) }},
+            score: {{ $currentMovie->getRatingStar() }},
             number: 10,
             numberMax: 10,
             hints: ['quá tệ', 'tệ', 'không hay', 'không hay lắm', 'bình thường', 'xem được', 'có vẻ hay', 'hay',
@@ -305,7 +303,7 @@
     </script>
 
     <script>
-        var episode_id = {{$episode->id}};
+        var episode_id = {{ $episode->id }};
         const wrapper = document.getElementById('player-wrapper');
         const vastAds = "{{ Setting::get('jwplayer_advertising_file') }}";
 
@@ -514,7 +512,7 @@
     </script>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
-            const episode = '{{$episode->id}}';
+            const episode = '{{ $episode->id }}';
             let playing = document.querySelector(`[data-id="${episode}"]`);
             if (playing) {
                 playing.click();

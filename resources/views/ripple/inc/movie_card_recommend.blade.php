@@ -1,6 +1,6 @@
 <a href="{{ $movie->getUrl() }}" class="block rounded-md overflow-hidden relative group" title="{{ $movie->name ?? '' }}">
     <img class="rounded-md group-hover:opacity-60 transition-all duration-500 transform group-hover:bg-opacity-60"
-        style="aspect-ratio: 16/9" src="{{ $movie->poster_url }}" alt="{{ $movie->name ?? '' }}" />
+        style="aspect-ratio: 16/9" src="{{ $movie->getPosterUrl() }}" alt="{{ $movie->name ?? '' }}" />
 
     <span
         class="absolute bottom-0 px-2 pb-2 pt-16 bg-gradient-to-t from-[#151111] rounded-md rounded-tl-none rounded-tr-none w-full text-white">

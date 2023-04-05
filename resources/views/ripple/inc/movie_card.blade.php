@@ -1,6 +1,10 @@
 <a href="{{ $movie->getUrl() }}" class="block rounded-md overflow-hidden relative group" title="{{ $movie->name ?? '' }}">
-    <img class="rounded-md group-hover:opacity-60 transition-all duration-500 transform group-hover:scale-110"
-        style="aspect-ratio: 256/340" src="{{ $movie->thumb_url }}" alt="{{ $movie->name ?? '' }}" />
+    <img
+        class="rounded-md group-hover:opacity-60 transition-all duration-500 transform group-hover:scale-110 @if ($key_section === 0 && $key > 3) lazyload @endif"
+        data-src="{{ $movie->getThumbUrl() }}"
+        src="@if ($key_section === 0 && $key > 3) data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 500'%3e%3c/svg%3e @else {{$movie->getThumbUrl()}} @endif"
+        alt="{{ $movie->name ?? '' }}"
+    />
 
     <span
         class="absolute bottom-0 px-2 pb-2 pt-16 bg-gradient-to-t from-[#151111] rounded-md rounded-tl-none rounded-tr-none w-full text-white">

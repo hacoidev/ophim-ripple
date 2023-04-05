@@ -54,7 +54,6 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
                     <option value="single" @if (isset(request('filter')['type']) && request('filter')['type'] == 'single') selected @endif>Phim lẻ</option>
                 </select>
             </div>
-
             <div class="block-search">
                 <select name="filter[category]" form="form-search"
                     class="bg-black border border-black text-gray-300 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-1">
@@ -103,15 +102,16 @@ $years = Cache::remember('all_years', \Backpack\Settings\app\Models\Setting::get
     </div>
 
     <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-2">
-        <h2 class="inline p-1.5 bg-[red] rounded-l-lg">
-            <span class="h-text text-white">
-                {{ $section_name ?? 'Danh Sách Phim' }}
-            </span>
-        </h2>
+        <h1 class="inline p-1.5 bg-[red] rounded-l-lg h-text text-white">
+            {{ $section_name ?? 'Danh Sách Phim' }}
+        </h1>
     </div>
     @if (count($data))
+        @php
+            $key_section = 0;
+        @endphp
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-3 mb-3">
-            @foreach ($data ?? [] as $movie)
+            @foreach ($data ?? [] as $key => $movie)
                 @include('themes::ripple.inc.movie_card')
             @endforeach
         </div>

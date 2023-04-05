@@ -31,6 +31,36 @@ class RippleServiceProvider extends ServiceProvider
                 'preview_image' => '',
                 'options' => [
                     [
+                        'name' => 'recommendations_limit',
+                        'label' => 'Recommended movies limit',
+                        'type' => 'number',
+                        'value' => 10,
+                        'wrapperAttributes' => [
+                            'class' => 'form-group col-md-4',
+                        ],
+                        'tab' => 'List'
+                    ],
+                    [
+                        'name' => 'per_page_limit',
+                        'label' => 'Pages limit',
+                        'type' => 'number',
+                        'value' => 20,
+                        'wrapperAttributes' => [
+                            'class' => 'form-group col-md-4',
+                        ],
+                        'tab' => 'List'
+                    ],
+                    [
+                        'name' => 'movie_related_limit',
+                        'label' => 'Movies related limit',
+                        'type' => 'number',
+                        'value' => 10,
+                        'wrapperAttributes' => [
+                            'class' => 'form-group col-md-4',
+                        ],
+                        'tab' => 'List'
+                    ],
+                    [
                         'name' => 'latest',
                         'label' => 'Danh sách mới cập nhật',
                         'type' => 'code',
@@ -104,9 +134,9 @@ class RippleServiceProvider extends ServiceProvider
                                 </div>
                             </div>
                             <div class="flex">
-                                <div class="px-2 space-x-2"><a class="text-gray-500">Liên Hệ</a>
-                                    <a class="text-[#44e2ff] hover:text-yellow-300" href="/ban-quyen">Khiếu nại bản
-                                        quyền</a>
+                                <div class="px-2 space-x-2">
+                                    <a class="text-[#44e2ff] hover:text-yellow-300" href="#">Liên Hệ</a>
+                                    <a class="text-[#44e2ff] hover:text-yellow-300" href="/ban-quyen">Khiếu nại bản quyền</a>
                                 </div>
                             </div>
                         </div>

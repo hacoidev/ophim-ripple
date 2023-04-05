@@ -16,16 +16,6 @@
             </a>
             <meta itemprop="position" content="1">
         </li>
-        <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
-            itemtype="http://schema.org/ListItem">
-            <a itemprop="item" href="/danh-sach/{{ $currentMovie->type == 'single' ? 'phim-le' : 'phim-bo' }}"
-                title="{{ $currentMovie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }}">
-                <span itemprop="name">
-                    {{ $currentMovie->type == 'single' ? 'Phim Lẻ' : 'Phim Bộ' }} »
-                </span>
-            </a>
-            <meta itemprop="position" content="2">
-        </li>
         @foreach ($currentMovie->regions as $region)
             <li class="inline hover:text-yellow-400" itemprop="itemListElement" itemscope=""
                 itemtype="http://schema.org/ListItem">
@@ -34,7 +24,7 @@
                         {{ $region->name }} »
                     </span>
                 </a>
-                <meta itemprop="position" content="3">
+                <meta itemprop="position" content="2">
             </li>
         @endforeach
         @foreach ($currentMovie->categories as $category)
@@ -45,7 +35,7 @@
                         {{ $category->name }} »
                     </span>
                 </a>
-                <meta itemprop="position" content="3">
+                <meta itemprop="position" content="2">
             </li>
         @endforeach
         <li class="inline text-gray-400" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
@@ -54,7 +44,7 @@
                     {{ $currentMovie->name }}
                 </span>
             </a>
-            <meta itemprop="position" content="4">
+            <meta itemprop="position" content="3">
         </li>
     </ul>
 
@@ -81,7 +71,7 @@
     <div class="flex flex-wrap flex-grow">
         <div class="w-full sm:w-1/2 md:w-[fit-content] flex justify-center pr-0 sm:pr-3">
             <div class="max-w-xs relative overflow-hidden container bg-[#1511116d] rounded-lg w-full md:w-[15em] h-[fit-content]">
-                <img class="w-full rounded-t-lg" style="aspect-ratio: 256/340" src="{{ $currentMovie->thumb_url }}"
+                <img class="w-full rounded-t-lg" style="aspect-ratio: 256/340" src="{{ $currentMovie->getThumbUrl() }}"
                 alt="{{ $currentMovie->name }} - {{ $currentMovie->origin_name }} ({{ $currentMovie->publish_year }})" />
                 @if ($currentMovie->is_copyright)
                     <div class="absolute top-[7%] -left-[34%] text-white uppercase py-[4px] px-0 text-[12px] w-full text-center -rotate-45 bg-gradient-to-r from-red-500">bản quyền</div>
@@ -151,7 +141,7 @@
                     <div class="flex-none lg:flex items-center">
                         <p class="flex items-center">
                             @foreach ([1, 2, 3, 4, 5, 6, 7, 8, 9, 10] as $star)
-                                @if ($currentMovie->rating_star >= $star)
+                                @if ($currentMovie->getRatingStar() >= $star)
                                     <svg aria-hidden="true" class="w-5 h-5 text-yellow-400" fill="currentColor"
                                         viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                                         <title>light star</title>
@@ -171,10 +161,10 @@
                             @endforeach
                         </p>
                         <p class="text-xs text-white align-middle">
-                            ({{ number_format($currentMovie->rating_star ?? 0, 1) }}
+                            ({{ $currentMovie->getRatingStar() }}
                             sao
                             /
-                            {{ $currentMovie->rating_count ?? 0 }} đánh giá)</p>
+                            {{ $currentMovie->getRatingCount() }} đánh giá)</p>
                     </div>
                 </div>
                 <div class="w-auto h-[fit-content] rounded-lg text-[#bbb] bg-[#272727] text-lg">
@@ -280,8 +270,11 @@
 
     </article>
 
-    <div class="fb-comments w-full rounded-lg bg-white" data-href="{{ $currentMovie->getUrl() }}" data-width="100%"
-        data-numposts="5" data-colorscheme="light" data-lazy="true">
+    <div style="background-color: #fff" class="mt-2">
+        <div class="fb-comments w-full rounded-lg bg-white mt-2.5"
+            data-href="{{ $currentMovie->getUrl() }}" data-width="100%" data-numposts="5" data-colorscheme="dark"
+            data-lazy="true">
+        </div>
     </div>
 
 
@@ -290,7 +283,10 @@
             Có thể bản muốn xem
         </h3>
         <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
-            @foreach ($movie_related ?? [] as $movie)
+            @php
+                $key_section = 0;
+            @endphp
+            @foreach ($movie_related ?? [] as $key => $movie)
                 @include('themes::ripple.inc.movie_card')
             @endforeach
         </div>

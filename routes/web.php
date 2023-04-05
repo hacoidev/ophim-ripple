@@ -15,16 +15,43 @@ Route::group([
     ),
 ], function () {
     Route::get('/', [RippleController::class, 'index']);
-    Route::get(sprintf('/%s/{category}', config('ophim.routes.category', 'the-loai')), [RippleController::class, 'getMovieOfCategory'])->name('categories.movies.index');
-    Route::get(sprintf('/%s/{actor}', config('ophim.routes.actors', 'dien-vien')), [RippleController::class, 'getMovieOfActor'])->name('actors.movies.index');
-    Route::get(sprintf('/%s/{director}', config('ophim.routes.directors', 'dao-dien')), [RippleController::class, 'getMovieOfDirector'])->name('directors.movies.index');
-    Route::get(sprintf('/%s/{tag}', config('ophim.routes.tags', 'tu-khoa')), [RippleController::class, 'getMovieOfTag'])->name('tags.movies.index');
-    Route::get(sprintf('/%s/{region}', config('ophim.routes.region', 'quoc-gia')), [RippleController::class, 'getMovieOfRegion'])->name('regions.movies.index');
-    Route::get(sprintf('/%s/{type}', config('ophim.routes.types', 'danh-sach')), [RippleController::class, 'getMovieOfType'])->name('types.movies.index');
-    Route::get(sprintf('/%s/{movie}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'getMovieOverview'])->name('movies.show');
-    Route::get(sprintf('/%s/{movie}/{episode}-{id}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'getEpisode'])
-        ->where(['movie' => '.+', 'episode' => '.+', 'id' => '[0-9]+'])->name('episodes.show');
-    Route::post(sprintf('/%s/{movie}/{episode}-{id}', config('ophim.routes.movie', 'phim')), [RippleController::class, 'reportEpisode'])
-        ->where(['movie' => '.+', 'episode' => '.+', 'id' => '[0-9]+'])->name('episodes.report');
-    Route::post(sprintf('/%s/{movie}/{episode}/rate', config('ophim.routes.movie', 'phim')), [RippleController::class, 'rateMovie'])->name('movie.rating');
+
+    Route::get(setting('site_routes_category', '/the-loai/{category}'), [RippleController::class, 'getMovieOfCategory'])
+        ->where(['category' => '.+', 'id' => '[0-9]+'])
+        ->name('categories.movies.index');
+
+    Route::get(setting('site_routes_region', '/quoc-gia/{region}'), [RippleController::class, 'getMovieOfRegion'])
+        ->where(['region' => '.+', 'id' => '[0-9]+'])
+        ->name('regions.movies.index');
+
+    Route::get(setting('site_routes_tag', '/tu-khoa/{tag}'), [RippleController::class, 'getMovieOfTag'])
+        ->where(['tag' => '.+', 'id' => '[0-9]+'])
+        ->name('tags.movies.index');
+
+    Route::get(setting('site_routes_types', '/danh-sach/{type}'), [RippleController::class, 'getMovieOfType'])
+        ->where(['type' => '.+', 'id' => '[0-9]+'])
+        ->name('types.movies.index');
+
+    Route::get(setting('site_routes_actors', '/dien-vien/{actor}'), [RippleController::class, 'getMovieOfActor'])
+        ->where(['actor' => '.+', 'id' => '[0-9]+'])
+        ->name('actors.movies.index');
+
+    Route::get(setting('site_routes_directors', '/dao-dien/{director}'), [RippleController::class, 'getMovieOfDirector'])
+        ->where(['director' => '.+', 'id' => '[0-9]+'])
+        ->name('directors.movies.index');
+
+    Route::get(setting('site_routes_episode', '/phim/{movie}/{episode}-{id}'), [RippleController::class, 'getEpisode'])
+        ->where(['movie' => '.+', 'movie_id' => '[0-9]+', 'episode' => '.+', 'id' => '[0-9]+'])
+        ->name('episodes.show');
+
+    Route::post(setting('site_routes_episode', '/phim/{movie}/{episode}-{id}'), [RippleController::class, 'reportEpisode'])
+        ->where(['movie' => '.+', 'movie_id' => '[0-9]+', 'episode' => '.+', 'id' => '[0-9]+'])
+        ->name('episodes.report');
+
+    Route::post(sprintf('/%s/{movie}/{episode}/rate', config('ophim.routes.movie', 'phim')), [RippleController::class, 'rateMovie'])
+        ->name('movie.rating');
+
+    Route::get(setting('site_routes_movie', '/phim/{movie}'), [RippleController::class, 'getMovieOverview'])
+        ->where(['movie' => '.+', 'id' => '[0-9]+'])
+        ->name('movies.show');
 });

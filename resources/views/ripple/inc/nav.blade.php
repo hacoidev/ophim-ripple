@@ -14,7 +14,6 @@ $title = isset($title) ? $title : setting('site_homepage_title', '');
                     {!! $brand !!}
                 @endif
             </a>
-            <h1 class="cursor-pointer w-max inline-flex" style="text-indent:-9999px">{{ $title }}</h1>
         </div>
         <button data-collapse-toggle="mobile-menu" type="button"
             class="inline-flex justify-center items-center ml-3 rounded-lg md:hidden text-gray-400 hover:text-white focus:ring-gray-500"

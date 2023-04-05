@@ -5,7 +5,7 @@ use Ophim\Core\Models\Movie;
 
 $recommendations = Cache::remember('site.movies.recommendations', setting('site_cache_ttl', 5 * 60), function () {
     return Movie::where('is_recommended', true)
-        ->limit(setting('site.movies.recommendations.limit', 10))
+        ->limit(get_theme_option('recommendations_limit', 10))
         ->get()
         ->sortBy([
             function ($a, $b) {
@@ -54,8 +54,8 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
             @endforeach
         </div>
     @endif
-
-    @foreach ($data as $item)
+    <h1 class="h-text text-white uppercase mb-2">{{ $title }}</h1>
+    @foreach ($data as $key_section => $item)
         <div class="mb-5 ">
             <div class="section-heading flex bg-[#151111] rounded-lg p-0 mb-3 justify-between content-between">
                 <h2 class="inline p-1.5 bg-red-600 to-red-600 rounded-l-lg">
@@ -67,7 +67,7 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
                 </a>
             </div>
             <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2">
-                @foreach ($item['data'] ?? [] as $movie)
+                @foreach ($item['data'] ?? [] as $key => $movie)
                     @include('themes::ripple.inc.movie_card')
                 @endforeach
             </div>
@@ -110,8 +110,8 @@ $data = Cache::remember('site.movies.latest', setting('site_cache_ttl', 5 * 60),
                 stopOnHover: true,
                 autoplay: true,
                 navText: [
-                    `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute top-1/3 left-0 text-red-500 bg-gradient-to-r from-[#151111] w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" /></svg>`,
-                    `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute top-1/3 right-0 text-red-500 bg-gradient-to-l from-[#151111] w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" /></svg>`],
+                    `<span style="display: none" aria-label="Previous">‹</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute top-1/3 left-0 text-red-500 bg-gradient-to-r from-[#151111] w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" /></svg>`,
+                    `<span style="display: none" aria-label="Next">›</span><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="absolute top-1/3 right-0 text-red-500 bg-gradient-to-l from-[#151111] w-8 h-8"><path stroke-linecap="round" stroke-linejoin="round" d="M11.25 4.5l7.5 7.5-7.5 7.5m-6-15l7.5 7.5-7.5 7.5" /></svg>`],
             });
         });
     </script>
