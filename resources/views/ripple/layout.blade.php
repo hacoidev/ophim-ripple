@@ -34,13 +34,12 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
 @endphp
 
 @push('header')
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.20.0/dist/full.css" rel="stylesheet" type="text/css" />
+    <link href="/themes/ripple/css/all.css" rel="stylesheet" type="text/css" />
 @endpush
 
 @section('body')
+    {{-- <body class="bg-[#1a1a1a] font-sans leading-normal tracking-normal"></body> --}}
     @include('themes::ripple.inc.nav')
-
     <div class="w-full pt-14">
         <div class="container mx-auto px-4 md:px-8 xl:px-40 md:mt-4 mb-8 text-gray-800 leading-normal">
             <div class="flex flex-row flex-wrap flex-grow mt-2">
@@ -114,9 +113,7 @@ $tops = Cache::remember('site.movies.tops', setting('site_cache_ttl', 5 * 60), f
         </div>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-    integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://unpkg.com/flowbite@1.6.4/dist/flowbite.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js" integrity="sha512-q583ppKrCRc7N5O0n2nzUiJ+suUv7Et1JGels4bXOaMFQcamPk9HjdUknZuuFjBNs7tsMuadge5k9RzdmO+1GQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     {!! setting('site_scripts_google_analytics') !!}
